@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config');
+//var config = require('../config');
 var models = require('../models/index.js');
 var utils = require('../lib/util');
 var request = require('request');

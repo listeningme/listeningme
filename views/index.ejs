@@ -20,9 +20,8 @@
     <!-- Also a way to navigate -->
     <script type="text/javascript">
       var myapp = angular.module('turquoiseapp', ['ui.state','ngStorage','ui.bootstrap']) ;
-      myapp.config(function($locationProvider,$stateProvider, $urlRouterProvider,$routeProvider){
+      myapp.config(function($stateProvider, $urlRouterProvider,$routeProvider){
       // For any unmatched url, send to /route1
-      //$locationProvider.html5Mode(false).hashPrefix('!');
       $urlRouterProvider.otherwise("/index");
       // Now set up the states
       //console.log($routeProvider);
@@ -79,7 +78,7 @@
                   if(_gen == ''){
                     _gen = null
                   }
-                  window.location.href='#/search/?general='+_gen+'&location='+$scope.goSearchArrLocation[0]+'&tag='+_tag;
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
               }
               $scope.changelocation = function(t){
                   $scope.goSearchArrLocation.length = 0;

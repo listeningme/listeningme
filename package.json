@@ -1,20 +1,27 @@
 {
   "name": "listening_me",
   "version": "0.2.0",
-  "private": true,
+  "subdomain": "listening",
   "scripts": {
     "start": "app.js"
   },  
+  "main": "app.js",
   "dependencies": {
     "express": "3.0.2",
     "ejs": "*",
     "mongoose": "*",
     "request": "*",
-    "crypto": "*"
+    "crypto": "*",
+    "readable-stream": "*"
   },
-  "author": "iamblue",  
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/listeningme/listeningme.git"
+  },
+  "author": "listeing_me",  
   "license": "MIT",
   "engines": {
-    "node": "0.8.2"
+    "node": "0.10.x",
+    "npm": "1.2.x"
   }
 }
