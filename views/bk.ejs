@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html ng-app="turquoise_bk_app">
+  <% include head %>
+  <body>
+    <% include header %>  
+    <a href="/bk/#/maxvalue_manage">最大價值管理</a>
+    <a href="/bk/#/lacation_manage">地區管理</a>
+    <a href="/bk/#/law_manage">法條管理</a>
+    <a href="/bk/#/unit_manage">機關管理</a>
+    <a href="/bk/#/1sttag_manage">第一階層管理</a>
+    <a href="/bk/#/2ndtag_manage">第二階層管理</a>
+    <a href="/bk/#/alltag_manage">關鍵字所有階層管理</a>
+    <div ui-view></div> 
+    <!-- Also a way to navigate -->
+    <script type="text/javascript">
+      var myapp = angular.module('turquoise_bk_app', ['ui.state']) ;
+      myapp.config(function($stateProvider, $urlRouterProvider,$routeProvider){
+      // For any unmatched url, send to /route1
+      $urlRouterProvider.otherwise("/");
+      // Now set up the states
+      //console.log($routeProvider);
+      $stateProvider
+        .state('addrules', {
+            url: "/addrules",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/addrules.ejs",
+            controller:function ($scope,$stateParams,$http){
+                $http.get('/bk/getAllMaxValue').success(function (data) {
+                    $scope.madatas = data;
+                });
+                $http.get('/bk/getAllLocations').success(function (data) {
+                    $scope.lodatas = data;
+                });
+                 $http.get('/bk/getAllUnit').success(function (data) {
+                    $scope.unidatas = data;
+                });
+                $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.tagdatas = data;
+                  $scope.seltags = data[0].name_en;
+                });
+                $scope.lawtagdatas = [];
+                //新增第一階層tag
+                $scope.addtags =function (){
+                  angular.forEach($scope.tagdatas, function(v, k){
+                     if (v.name_en == $scope.seltags){
+                      $scope.seltags_zh = v.name_zh; 
+                     }
+                  });
+                  $scope.lawtagdatas.push({name_en:$scope.seltags,name_zh:$scope.seltags_zh})
+                }
+                //刪除第一階層tag
+                $scope.deletetag = function (id){
+                  $scope._lawtagdatas = [];
+                  angular.forEach($scope.lawtagdatas, function(v, k){
+                      if (v.name_en !=id ){
+                        $scope._lawtagdatas.push({name_en:v.name_en,name_zh:v.name_zh})
+                      } 
+                  });
+                  $scope.lawtagdatas.length=0;
+                  angular.forEach($scope._lawtagdatas, function(v, k){
+                      $scope.lawtagdatas.push({name_en:v.name_en,name_zh:v.name_zh})
+                  });
+                }
+                $scope.add =function (){
+                    if($scope.title != '' && $scope.content != ''){
+                      $scope.firstArr = [];
+                      angular.forEach($scope.lawtagdatas, function(v, k){
+                        $scope.firstArr.push(v.name_en)
+                      });
+                      $http({
+                        url:'/bk/addNewLaw',
+                        method: "POST",
+                        data:{
+                            title:$scope.title,
+                            content:$scope.content,
+                            location:$scope.location,
+                            unit:$scope.unit,
+                            url:$scope.url,
+                            max_type:$scope.max_type,
+                            max_content:$scope.max_content,
+                            firsttag:$scope.firstArr
+                        }
+                      }).success(function (data, status, headers, config) {
+                            alert('恭喜新增成功!');
+                            $scope.title = '';
+                            $scope.content = '';
+                            $scope.url = '';
+                            $scope.max_content = '';
+                            $scope.lawtagdatas.length = 0;
+                      })
+                    }
+                }
+            }
+        })
+        .state('editrules', {
+            url: "/editlaw/:rawId",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/editrules.ejs",
+            controller:function ($scope,$stateParams,$http){
+              console.log($stateParams.rawId);
+              var getalltag = $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.tagdatas = data;
+                });
+              getalltag.then(function(){
+                  $http.get('/bk/getNewLaw?_id='+$stateParams.rawId).success(function (data) {
+                      $scope.title = data[0].title;
+                      $scope.content = data[0].content;
+                      $scope.url = data[0].url;
+                      $scope.max_content = data[0].max_content;
+                      $scope.max_type = data[0].max_type;
+                      $scope.unit = data[0].unit[0];
+                      $scope.location = data[0].location;
+                      $scope._id = data[0]._id;
+                      if(!data[0].firsttag){
+                          $scope.lawtagdatas = [];  
+                      }else{
+                          $scope.firstArr = data[0].firsttag;
+                          $scope.lawtagdatas = [];
+                          angular.forEach($scope.tagdatas, function(v, k){
+                            angular.forEach($scope.firstArr, function(v1, k1){
+                              if(v1 == v.name_en){
+                                $scope.lawtagdatas.push({name_en:v1,name_zh:v.name_zh})
+                              }
+                            });
+                          });
+                      } 
+                  });
+              });
+              $http.get('/bk/getAllLocations').success(function (data) {
+                  data.push({name_en:'none',name_zh:'跨地區'})
+                  $scope.lodatas = data;
+              });
+              $http.get('/bk/getAllMaxValue').success(function (data) {
+                  $scope.madatas = data;
+              });
+              $http.get('/bk/getAllUnit').success(function (data) {
+                  $scope.unidatas = data;
+              });
+              $scope.add = function(){
+                  $scope.firstArr = [];
+                  angular.forEach($scope.lawtagdatas, function(v, k){
+                    $scope.firstArr.push(v.name_en)
+                  });
+                  Arr = [];
+                  Arr.push($scope.unit);
+                  $http({
+                    url:'/bk/updateEditLaw',
+                    method: "POST",
+                    data:{
+                        _id:$scope._id,
+                        title:$scope.title,
+                        content:$scope.content,
+                        url:$scope.url,
+                        max_content:$scope.max_content,
+                        max_type:$scope.max_type,
+                        unit:Arr,
+                        location:$scope.location,
+                        firsttag:$scope.firstArr
+                    }
+                  }).success(function (data, status, headers, config) {
+                      if(data.res == true){
+                        alert('已儲存!');  
+                      }else{
+                        alert('儲存失敗，再試一次!');
+                      }
+                  })
+              }
+              $scope.addtags =function (){
+                  angular.forEach($scope.tagdatas, function(v, k){
+                     if (v.name_en == $scope.seltags){
+                      $scope.seltags_zh = v.name_zh; 
+                     }
+                  });
+                  $scope.lawtagdatas.push({name_en:$scope.seltags,name_zh:$scope.seltags_zh})
+                }
+                //刪除第一階層tag
+                $scope.deletetag = function (id){
+                  $scope._lawtagdatas = [];
+                  angular.forEach($scope.lawtagdatas, function(v, k){
+                      if (v.name_en !=id ){
+                        $scope._lawtagdatas.push({name_en:v.name_en,name_zh:v.name_zh})
+                      } 
+                  });
+                  $scope.lawtagdatas.length=0;
+                  angular.forEach($scope._lawtagdatas, function(v, k){
+                      $scope.lawtagdatas.push({name_en:v.name_en,name_zh:v.name_zh})
+                  });
+                }
+            }
+        })
+        .state('alltag_manage', {
+            url: "/alltag_manage",
+            templateUrl: "/themeplate/backend/alltag_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+                
+                $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.firsttagdatas = data;
+                });
+                $http.get('/bk/getAllSecondTag').success(function (data) {
+                  $scope.Secandtagdatas = data;
+                });
+                $http.get('/bk/getAllTagManage').success(function (data) {
+                    $scope.datas = data;
+                });
+                $scope.add = function(){
+                   $http({
+                      url:'/bk/addAllTagManageFirstTag',
+                      method:'POST',
+                      data:{
+                        first_name_en:$scope.selfirsttag
+                      },
+                   }).success(function (data, status, headers, config) {
+                        $http.get('/bk/getAllTagManage').success(function (data) {
+                            $scope.datas = data;
+                        });
+                    })
+                };
+                $scope.save = function (index){
+                    
+                    $http({
+                        url:'/bk/saveThisTagManage',
+                        method:'POST',
+                        data:{
+                          data:$scope.datas[index]
+                        },
+                        }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllTagManage').success(function (data) {
+                              $scope.datas = data;
+                        });
+                    })
+                }
+            }
+        })
+        .state('1sttag_manage', {
+            url: "/1sttag_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/1sttag_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+                $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.datas = data;
+                });
+                $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addNewFirstTag',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllFirstTag').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+                }
+            }
+        })
+        .state('2ndtag_manage', {
+            url: "/2ndtag_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/2ndtag_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+                $http.get('/bk/getAllSecondTag').success(function (data) {
+                  $scope.datas = data;
+                });
+                $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addNewSecondTag',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllSecondTag').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+                }
+            }
+        })
+        .state('location_manage', {
+            url: "/lacation_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/location_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+              //console.log($stateParams.contactId);
+              $http.get('/bk/getAllLocations').success(function (data) {
+                  $scope.datas = data;
+              });
+              $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addNewLocations',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllLocations').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+              }
+            }
+        })
+        .state('maxvalue_manage', {
+            url: "/maxvalue_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/maxvalue_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+              $http.get('/bk/getAllMaxValue').success(function (data) {
+                  $scope.datas = data;
+              });
+              $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addNewMaxValue',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllMaxValue').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+              }
+            }
+        })
+        .state('unit_manage', {
+            url: "/unit_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/unit_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+              $http.get('/bk/getAllUnit').success(function (data) {
+                  $scope.datas = data;
+              });
+              $http.get('/bk/getAllLocations').success(function (data) {
+                  data.push({name_en:'none',name_zh:'跨地區'})
+                  $scope.lodatas = data;
+              });
+              $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addNewUnit',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en,
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getAllUnit').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+              }
+            }
+        })
+        .state('law_manage', {
+            url: "/law_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/law_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+              //console.log($stateParams.contactId);
+              $http.get('/bk/getAllLaws').success(function (data) {
+                  $scope.law_manages = data;
+              });
+              $scope.delete =function (id){
+                  $http({
+                    url:'/bk/deleteLaw',
+                    method: "POST",
+                    data:{
+                        _id:id
+                    }
+                  }).success(function (data, status, headers, config) {
+                      alert('已刪除！');
+                      $http.get('/bk/getAllLaws').success(function (data) {
+                          $scope.law_manages = data;
+                      });
+                  })
+              }
+            }
+        })
+
+    })
+    .run(['$rootScope', '$state', '$stateParams',
+        function ($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            //$templateCache.put('/themeplate/search_header.ejs')
+    }]);
+    </script>
+    <% include footer %>
+  </body>
+</html>

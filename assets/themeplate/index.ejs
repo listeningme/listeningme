@@ -1,0 +1,38 @@
+<div ui-view></div>
+<div id="content">
+	<div class="wrapper_c">   
+      <div class="span12" style="height:120px" ng-hide="searchblank"></div>
+      <div class="form-wrapper">
+          <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-bind="tt()" ng-click="tt1()">
+          <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
+      </div>
+      <div class="span12" style="height:120px" ng-hide="searchblank"></div>
+      <h5 class="widget-name" >
+      </h5>
+      <ng-include src="'/themeplate/search_header.ejs'"></ng-include>
+      <div class="well invoice">
+          <ul class="repo_div_fr clear_sfr" ng-repeat="i in datas">
+            <div class="invoice-head" style="padding:0px 10px;">
+              <a href="/#/details/{{i._id}}" style="float:left;padding-left:20px;"><h3 style="line-height:20px">{{i.title}}</h3></a>
+              <ul class="pull-right minus-list invoice-data" style="float:left;padding-top:10px;padding-left:20px;">
+                <li style="width:450px;height:20px;overflow:hidden">內容預覽：{{i.content}}</li>
+              </ul>
+              <h5 style="font-size:14px;float:right">Max Value：{{i.max_type}}{{i.max_content}}</h5>
+            </div>
+          </ul>
+      </div>
+      <div ng-show="noneresult">
+          <ul style="margin-top:50px;">
+            <li>
+                <h3 style="text-align:center">很抱歉沒有符合的結果，您可以把您的搜尋記錄回饋給我們，讓我們優先去加強此搜尋記錄法條！
+                </h3>
+            </li>
+            <li style="width:100%"><div style="margin:auto;width:100px">
+                <a class="btn btn-large btn-success" style="width:100px" ng-click="sendnoresault()">傳送</a>
+              </div>
+            </li>
+          </ul>
+      </div>
+
+  	</div>
+</div>

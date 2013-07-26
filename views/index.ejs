@@ -1,11 +1,216 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-    <link rel='stylesheet' href='/css/style.css' />
-  </head>
+<html ng-app="turquoiseapp">
+  <% include head %>
   <body>
-    <h1></h1>
-    <p>Welcome</p>
+    <% include header %>  
+    <div ui-view></div> 
+
+    <div id="moverightFr" class="moverightFr">
+      <div class="mouserightFr" style="width:60px;height:100px;background:#333;" lsdiv>
+        <ul>
+          <li>喜</li><li>
+          </li><li>好</li><li>
+          </li><li>清</li><li>
+          </li><li>單</li><li>
+        </li></ul>
+      </div>
+      <div class="rightFr">
+      </div>
+    </div>
+    <!-- Also a way to navigate -->
+    <script type="text/javascript">
+      var myapp = angular.module('turquoiseapp', ['ui.state','ngStorage','ui.bootstrap']) ;
+      myapp.config(function($locationProvider,$stateProvider, $urlRouterProvider,$routeProvider){
+      // For any unmatched url, send to /route1
+      //$locationProvider.html5Mode(false).hashPrefix('!');
+      $urlRouterProvider.otherwise("/index");
+      // Now set up the states
+      //console.log($routeProvider);
+      $stateProvider
+        .state('index', {
+            url: "/index",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/index.ejs",
+            controller:function ($scope,$stateParams,$http,$location){
+              $http.get('/indexlaws').success(function (data) {
+                  $scope.datas = data;
+              });
+              $http.get('/get/location').success(function (data) {
+                  $scope.lodatas = data;
+              });
+              $scope.tt1 =function (){
+                $scope.searchblank = true;
+                //console.log($scope.searchblank)
+              }
+              $scope.selected = undefined;
+              $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.allTagdatas = data;
+                  var firsttagArr = [];
+                  angular.forEach(data, function(v, k){
+                    firsttagArr.push(v.name_zh)
+                  });
+                  $scope.states = firsttagArr;
+              });
+              $scope.goSearchArrTag = []; //（搜尋用）專門放第一階段tag Arr
+              $scope.goSearchArrGeneral = []; //（搜尋用）專門放使用者自己的關鍵字 Arr
+              $scope.goSearchArrLocation = []; //（搜尋用）專門放使用者欲查詢地區 Arr
+              //（待做）偵測使用者目前所在地區-------------------------------------
+              $scope.location = 'TPE';
+              $scope.goSearchArrLocation.push($scope.location);
+              //--------------------------------------------------------------
+              $scope.gosearch =function(){
+                  var _ck = 0;
+                  angular.forEach($scope.allTagdatas, function(v, k){
+                     if(v.name_zh == $scope.selected){
+                        $scope.goSearchArrTag.push(v.name_en)
+                        _ck = 1;
+                     }
+                  });     
+                  if(_ck ==0){
+                    $scope.goSearchArrGeneral.push($scope.selected);
+                  }
+                  var _gen = $scope.goSearchArrGeneral.toString();
+                  var _tag = $scope.goSearchArrTag.toString();
+                  //console.log(_tag);
+                  //$location.path('#/search/?general='+_gen);
+                  if(_tag == ''){
+                    _tag = null
+                  }
+                  if(_gen == ''){
+                    _gen = null
+                  }
+                  window.location.href='#/search/?general='+_gen+'&location='+$scope.goSearchArrLocation[0]+'&tag='+_tag;
+              }
+              $scope.changelocation = function(t){
+                  $scope.goSearchArrLocation.length = 0;
+                  $scope.goSearchArrLocation.push(t);
+                  //console.log($scope.goSearchArrLocation);
+              }
+            }
+        })
+        .state('help', {
+            url: "/help",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/help.ejs",
+            controller:function ($scope,$stateParams){
+              console.log($stateParams.contactId);
+            }
+        })
+        .state('newResp',{
+           url: "/newResp",
+            templateUrl: "/themeplate/newResp.ejs",
+            controller:function ($scope,$stateParams){
+              console.log($stateParams.resault);
+            }
+        })
+        .state('details',{
+           url: "/details/:id",
+            templateUrl: "/themeplate/details.ejs",
+            controller:function ($scope,$stateParams,$http){
+              console.log($stateParams.id);
+              //var converter = new Showdown.converter();
+              $http.get('/get/lawDetails?_id='+$stateParams.id).success(function (data) {
+                  $scope.lawdatas = data;
+                });
+            }
+        })
+        .state('aboutus',{
+           url: "/aboutus",
+            templateUrl: "/themeplate/header/aboutus.ejs",
+            controller:function ($scope,$stateParams){
+              console.log($stateParams.resault);
+            }
+        })
+        .state('search',{
+           url: "/search/?general&tag&location",
+            templateUrl: "/themeplate/index.ejs",
+            controller:function ($scope,$stateParams,$http){
+              console.log($stateParams);
+              $scope.searchblank = true;
+              $http.get('/get/location').success(function (data) {
+                  $scope.lodatas = data;
+              });
+              $http.get('/search?general='+$stateParams.general+'&location='+$stateParams.location+'&tag='+$stateParams.tag).success(function (data) { 
+                  if(data=='none'){
+                    $scope.noneresult = true;
+                  }
+                  $scope.datas =data;
+                });
+              $scope.selected = undefined;
+              $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.allTagdatas = data;
+                  var firsttagArr = [];
+                  angular.forEach(data, function(v, k){
+                    firsttagArr.push(v.name_zh)
+                  });
+                  $scope.states = firsttagArr;
+              });
+              $scope.goSearchArrTag = []; //（搜尋用）專門放第一階段tag Arr
+              $scope.goSearchArrGeneral = []; //（搜尋用）專門放使用者自己的關鍵字 Arr
+              $scope.goSearchArrLocation = []; //（搜尋用）專門放使用者欲查詢地區 Arr
+              //（待做）偵測使用者目前所在地區-------------------------------------
+              $scope.location = $stateParams.location;
+              $scope.goSearchArrLocation.push($scope.location);
+
+
+
+              //------------------------------------------
+              //傳送查詢結果失敗的結果
+              $scope.sendnoresault = function(){
+                  $http({
+                      url:'/noResaultFeedBack',
+                      method: "POST",
+                      data:{
+                          goSearchArrTag:$scope.goSearchArrTag,
+                          goSearchArrGeneral:$scope.goSearchArrGeneral,
+                          goSearchArrLocation:$scope.goSearchArrLocation
+                      }
+                    }).success(function (data, status, headers, config) {
+                        if(data == 'success'){
+                          alert('已傳送!感謝您的回饋');  
+                        }else{
+                          alert('傳送失敗，再試一次!');
+                        }
+                    })
+              }
+
+            }
+        })
+        .state('login',{
+           url: "/login",
+            templateUrl: "/themeplate/login/login.ejs",
+            controller:function ($scope,$stateParams){
+            }
+        })
+    })
+    .run(['$rootScope', '$state', '$stateParams',
+        function ($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            //$templateCache.put('/themeplate/search_header.ejs')
+    }]);
+    myapp.directive("markdown", function ($compile, $http) {
+        var converter = new Showdown.converter();
+        return {
+            restrict: 'E',
+            replace: true,
+            link: function (scope, element, attrs) {
+                $http.get('/get/lawDetails?_id='+scope.$stateParams.id).success(function (data) {
+                    element.html(converter.makeHtml(data[0].content));
+                });
+            }
+        };
+    });
+    myapp.directive('lsdiv',function(){
+      return {
+        link: function($scope, elem, iAttrs, controller) {
+            elem.bind('click',function(){
+              elem.$parent.addClass('active movelsdiv')
+            })
+        }
+      };
+    });
+    </script>
+    <% include footer %>
   </body>
 </html>

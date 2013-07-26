@@ -1,0 +1,11 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+      <li ng-class="{ active: $state.includes('index') }"><a ng-click="" href="#/">福利法條</a></li>
+      <li ng-class="{ active: $state.includes('help') }"><a ng-click="" href="#/help">民眾求助</a></li>
+      <li ng-class="{ active: $state.includes('newResp') }"><a ng-click="" href="#/newResp">最新回應</a></li>
+      <li style="float:right"> 
+          查詢地區：
+          <select style="width:100px;margin-top:5px;margin-right:10px;" ng-model="location" ng-options="m.name_en as m.name_zh for m in lodatas" ng-change="changelocation(location)"></select>
+  	  </li>
+  </ul>
+</div>

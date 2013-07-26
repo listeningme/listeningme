@@ -1,0 +1,33 @@
+<div ui-view></div>
+<div id="content">
+	 <div class="wrapper_c">   
+        <div class="span12">
+            <div class="navbar">
+                <h3>所有關鍵字階層管理</h3>
+                <div >
+                    <select ng-model="selfirsttag" ng-options="m.name_en as m.name_zh for m in firsttagdatas"></select>
+                    <a class="btn" ng-click="add()">新增</a>
+                </div>
+                <div ng-repeat="n in datas">
+                    <div class="navbar-inner">
+                        <h6>{{n.first_name_en}}</h6>
+                        <div style="float:right">
+                            <select ng-model="selsecondtag" ng-options="m.name_en as m.name_zh for m in Secandtagdatas"></select>
+                            <a class="btn">新增第二階層</a>
+                        </div>
+                    </div>
+                    <div class="well" ng-repeat="a in n.second_name_en">
+                        <div class="control-group">
+                            <label class="control-label">{{a}}
+                                <div class="btn" style="float:right">新增第三階層規則</div>
+                            </label>
+                        </div>
+                    </div>
+                    <a class="btn btn-info" style="float:right" ng-click="save($index)">儲存</a>
+                    <br/><br/>
+                    <h5 class="widget-name"></h5>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>

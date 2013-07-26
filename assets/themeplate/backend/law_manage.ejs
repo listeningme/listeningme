@@ -1,0 +1,30 @@
+<div ui-view></div>
+<div id="content">
+	 <div class="wrapper_c">   
+        <div class="span12">
+            <table class="table table-hover">
+                <h2>法條列表 
+                    <a class="btn btn-info" style="float:right" href="/bk/#/addrules">新增法條</a>
+                </h2>
+                <thead>
+                    <tr>
+                        <th>地區</th>
+                        <th>法條名稱</th>
+                        <th>機關</th>
+                        <th>最大價值</th>
+                        <th>動作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="i in law_manages">
+                        <td>{{i.location}}</td>
+                        <td>{{i.title}}</td>
+                        <td>{{i.unit}}</td>
+                        <td>{{i.max_type}}{{i.max_content}}</td>
+                        <td><a class="btn" href="/bk/#/editlaw/{{i._id}}">編輯</a><a class="btn" ng-click="delete(i._id)">刪除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

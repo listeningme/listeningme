@@ -14,3 +14,13 @@ fs.readdirSync(__dirname).forEach(function (filename) {
 });
 
 exports.User = mongoose.model('User');
+exports.Lawdetails = mongoose.model('Lawdetails');
+exports.Maxdetails = mongoose.model('Maxdetails');
+exports.Unitdetails = mongoose.model('Unitdetails');
+exports.Locationdetails = mongoose.model('Locationdetails');
+exports.Firsttag = mongoose.model('Firsttag');
+exports.Secondtag = mongoose.model('Secondtag');
+exports.Alltag = mongoose.model('Alltag');
+exports.Noresaultfeedback = mongoose.model('Noresaultfeedback');
+
+

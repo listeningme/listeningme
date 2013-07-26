@@ -1,0 +1,49 @@
+<div ui-view></div>
+<div id="content">
+	 <div class="wrapper_c">   
+        <div class="span12">
+          <h2>新增法條
+            <a class="btn btn-info" style="float:right" href="/bk/#/law_manage">返回法條</a>
+          </h2>
+            <dl class="dl-horizontal" >
+                <dt >地區</dt>
+                <dd >
+                    <select ng-model="location" ng-options="m.name_en as m.name_zh for m in lodatas"></select>
+                </dd>
+                <dt >標題</dt>
+                <dd ><input type="text" ng-model="title" value="{{title}}" style="width:400px"/></dd>
+                <dt>內容</dt>
+                <dd><textarea cols="150" id="rule_content" name="rule[content]" rows="30" data-validate="true" ng-model="content" value="{{content}}"></textarea></dd>
+                <dt>原始網址</dt>
+                <dd>http:// <input type="text" ng-model="url" style="width:400px"/></dd>
+                <dt>機關</dt>
+                <dd><select ng-model="unit" ng-options="m.name_en as m.name_zh for m in unidatas"></select>
+                </dd>
+                <dt>最大價值類別</dt>
+                <dd>
+                    <select ng-model="max_type" ng-options="m.name_en as m.name_zh for m in madatas"></select>
+                </dd>
+                <dt>最大價值內容</dt>
+                <dd>
+                    <input type="text" ng-model="max_content"/>
+                </dd>
+                <dt>第一層關鍵字</dt>
+                <dd>
+                    <ul>
+                        <li > 
+                            <a ng-repeat="t in lawtagdatas" style="margin-left:10px;"class="btn" ng-click="deletetag(t.name_en)">{{t.name_zh}}</a>
+                        </li>
+                        <li>
+                            <select ng-model="seltags" ng-options="m.name_en as m.name_zh for m in tagdatas" ></select> <a class="btn" ng-click="addtags()">新增tag</a>
+                        </li>
+                    <ul>
+                     
+                </dd>
+                <dd>
+                    <a class="btn" ng-click="add()">確認送出</a>
+                    <a class="btn" href="/bk/#/law_manage">取消</a>
+                </dd>
+            </dl>           
+        </div>  
+    </div>
+</div>

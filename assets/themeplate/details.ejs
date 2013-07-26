@@ -1,0 +1,47 @@
+<div ui-view></div>
+    <div id="container">
+        <div id="content">
+          <div class="wrapper_c">
+            <div class="addon animated fadeInDownBig">
+            <ul class="tabs-nav three-items" style="height:50px;">
+                <li>本法條經過組織認證<img src="/img/diploma1-78.png" class="
+            addon_pic"/></li>
+                <li>對你有幫助嗎？贊助我們<img src="/img/sell.png" class="addon_pic"/></li>
+                <li>錯誤回報<img src="/img/msg.png" class="addon_pic"/></li>
+            </ul>
+          </div>
+          <br/><br/>
+            <h1 class="tt1_a">{{lawdatas[0].title}}</h1>
+            <div class="content_a "><markdown></markdown></div>
+            <br/>
+            <h5 class="widget-name">
+            </h5>
+            <h2>本福利法條所包含的tags:</h2>
+            <div class="tagcollection">{{lawdatas[0].firsttag}}</div>
+            <h5 class="widget-name">
+            </h5>
+            <h2>參考部落格網址:</h2>
+            <ul class="ref_lists">
+                {{lawdatas[0].blogurl}}
+            </ul>
+            <h5 class="widget-name">
+            </h5>
+            <h2>網友建議tags列表:</h2>
+            <div class="iwanntag">
+              <div class="login_area">
+                <div class="btn btn-success">我想幫忙增加tag!</div>&nbsp&nbsp&nbsp(需登入facebook)
+              </div>
+            </div>
+            <h5 class="widget-name">
+            </h5>
+            <h2>前往原始法條頁面:</h2>
+            <div id="external-link">
+                <a class="btn btn-primary gourl" href="http://{{lawdatas[0].url}}" target="_blank">前往來源頁面</a>
+            </div>
+            <h5 class="widget-name">
+            </h5>
+            <h2>相關留言</h2>
+            <div id="disqus_thread"></div>
+          </div>
+        </div>
+    </div>

@@ -1,0 +1,25 @@
+<div ui-view></div>
+<div id="content">
+	 <div class="wrapper_c">   
+        <div class="span12">
+          <h2>第二階層tag管理</h2>
+            <dl class="dl-horizontal" >
+                <dt >tag列表</dt>
+                <dd >
+                    <ul>
+                        <li ng-repeat="d in datas">
+                            中文：{{d.name_zh}} ｜｜英文：{{d.name_en}}
+                        </li>
+                    </ul>
+                </dd>
+                <dt >新增第二階層tag</dt>
+                <dd >中文：<input type="text" ng-model="name_zh"/><br/>
+                    英文：<input type="text" ng-model="name_en"/>
+                </dd>   
+                <dd>
+                    <a class="btn" ng-click="add()">確認送出</a>
+                </dd>
+            </dl>           
+        </div>  
+    </div>
+</div>

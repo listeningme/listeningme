@@ -1,0 +1,41 @@
+<div ui-view></div>
+<div id="content">
+	<div class="wrapper_c">        
+      <div class="form-wrapper">
+          <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-bind="tt()">
+          <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
+      </div>
+      <h5 class="widget-name"><i class="icon-columns"></i>
+          歡迎來到福利請聽
+      </h5>
+      <ng-include src="'/themeplate/search_header.ejs'"></ng-include>
+      <div class="well invoice">
+          <ul class="repo_div_fr clear_sfr">
+            <div class="invoice-head" style="padding:4px 10px">
+              <a href="http://127.0.0.1:3000/view?id=1&amp;location=KHH#comment-908735692" style="float:left;padding-left:20px;"><h3>Listening 福利請聽</h3></a>
+              <ul class="pull-right minus-list invoice-data" style="float:left;padding-top:10px;padding-left:20px;">
+                <li>內容預覽：...ksdlfjkldsjfksdjfklsjdflksjdflksdjfklsdjfklsdjfklsjdfklsdjfklsdjfklsdjfklsfjklsdjfklsfjklsdjfklsfdj</li>
+              </ul>
+              <!--尚未加入最愛 -->
+              <!-- <div class="top-info" style="float:right;margin-top:20px;">
+                <a href="#" title="" class="blue-square" style="width:30px;height:30px;">
+                  <i class="icon-plus" style="margin-left:5px;line-height:20px"></i>
+                </a>
+              </div> -->
+              <!-- 以加入最愛 -->
+              <div class="top-info" style="float:right;margin-top:20px;">
+                <a href="#" title="" class="green-square" style="width:30px;height:30px;">
+                  <i class="icon-ok" style="margin-left:5px;line-height:20px"></i>
+                </a>
+              </div>
+              <!-- // -->
+            </div>
+          </ul>
+          <ul class="repo_div_fr clear_sfr">
+            <div class="invoice-head" style="padding:4px 10px">
+              <a href="http://127.0.0.1:3000/view?id=1&amp;location=KHH#comment-908735692" style="float:left;padding-left:20px;"><h3>Listening 福利請聽</h3></a>
+            </div>
+          </ul>
+      </div>
+  	</div>
+</div>
