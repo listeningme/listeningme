@@ -5,7 +5,7 @@ var express = require('express')
   , path = require('path');
 
 var app = express();
-var config = require(path.join(__dirname, '/', 'config.json'));
+//var config = require(path.join(__dirname, '/', 'config.json'));
 
 app.enable("jsonp callback");
 
