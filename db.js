@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
 var path = require('path');
 //var config = require('./config');
-var config = require(path.join(__dirname, '/', 'config.json')) || ;
+var configdb = require(path.join(__dirname, '/', 'config.json')).db || process.env.db;
 //heroku的寫法
 var uristring = 
   process.env.MONGOLAB_URI || 
   process.env.MONGOHQ_URL || 
-  process.env.db || 
-  config.db;
+  configdb;
  
 mongoose.connect(uristring, function (err, res) {
   if (err) { 
