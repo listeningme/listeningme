@@ -37,9 +37,8 @@
               $http.get('/get/location').success(function (data) {
                   $scope.lodatas = data;
               });
-              $scope.tt1 =function (){
+              $scope.clicksearch = function (){
                 $scope.searchblank = true;
-                //console.log($scope.searchblank)
               }
               $scope.selected = undefined;
               $http.get('/bk/getAllFirstTag').success(function (data) {
@@ -154,7 +153,7 @@
         .state('search',{
            url: "/search/?general&tag&location",
             templateUrl: "/themeplate/index.ejs",
-            controller:function ($scope,$stateParams,$http){
+            controller:function ($scope,$stateParams,$http,$location){
               console.log($stateParams);
               $scope.searchblank = true;
               $http.get('/get/location').success(function (data) {
@@ -181,8 +180,48 @@
               //（待做）偵測使用者目前所在地區-------------------------------------
               $scope.location = $stateParams.location;
               $scope.goSearchArrLocation.push($scope.location);
-
-
+              if($stateParams.general != null){
+                  var _general = $stateParams.general.split(",");
+                  angular.forEach(_general, function(v, k){
+                     $scope.goSearchArrGeneral.push(v);
+                   });  
+              }
+              if($stateParams.tag != null){
+                  var _ta = $stateParams.tag.split(",");
+                  angular.forEach(_ta, function(v, k){
+                     $scope.goSearchArrTag.push(v);
+                  });  
+              }
+              console.log($scope.goSearchArrGeneral);
+              console.log($scope.goSearchArrTag);
+              $scope.gosearch =function(){
+                  var _ck = 0;
+                  angular.forEach($scope.allTagdatas, function(v, k){
+                     if(v.name_zh == $scope.selected){
+                        $scope.goSearchArrTag.push(v.name_en)
+                        _ck = 1;
+                     }
+                  });     
+                  if(_ck ==0){
+                    $scope.goSearchArrGeneral.push($scope.selected);
+                  }
+                  var _gen = $scope.goSearchArrGeneral.toString();
+                  var _tag = $scope.goSearchArrTag.toString();
+                  //console.log(_tag);
+                  //$location.path('#/search/?general='+_gen);
+                  if(_tag == ''){
+                    _tag = null
+                  }
+                  if(_gen == ''){
+                    _gen = null
+                  }
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
+              }
+              $scope.changelocation = function(t){
+                  $scope.goSearchArrLocation.length = 0;
+                  $scope.goSearchArrLocation.push(t);
+                  //console.log($scope.goSearchArrLocation);
+              }
 
               //------------------------------------------
               //傳送查詢結果失敗的結果
