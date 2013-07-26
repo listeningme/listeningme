@@ -9,7 +9,8 @@
     "ejs": "*",
     "mongoose": "*",
     "request": "*",
-    "crypto": "*"
+    "crypto": "*",
+    "readable-stream": "*"
   },
   "author": "iamblue",  
   "license": "MIT",
