@@ -3,14 +3,14 @@
 	<div class="wrapper_c">   
       <div class="span12" style="height:120px" ng-hide="searchblank"></div>
       <div class="form-wrapper">
-          <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-bind="tt()" ng-click="tt1()">
+          <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-click="clicksearch()" >
           <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
       </div>
-      <div class="span12" style="height:120px" ng-hide="searchblank"></div>
+      <div class="span12" style="height:120px;" ng-hide="searchblank"></div>
       <h5 class="widget-name" >
       </h5>
       <ng-include src="'/themeplate/search_header.ejs'"></ng-include>
-      <div class="well invoice">
+      <div class="well invoice" ng-class="searchblank? 'animated fadeInUp' : ''">
           <ul class="repo_div_fr clear_sfr" ng-repeat="i in datas">
             <div class="invoice-head" style="padding:0px 10px;">
               <a href="/#/details/{{i._id}}" style="float:left;padding-left:20px;"><h3 style="line-height:20px">{{i.title}}</h3></a>
