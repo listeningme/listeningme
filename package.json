@@ -21,6 +21,7 @@
   "author": "listeing_me",  
   "license": "MIT",
   "engines": {
-    "node": "0.8.2"
+    "node": "0.10.x",
+    "npm": "1.2.x"
   }
 }
