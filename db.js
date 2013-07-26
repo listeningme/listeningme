@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var path = require('path');
 //var config = require('./config');
-var configdb = require(path.join(__dirname, '/', 'config.json')).db || process.env.db;
+var configdb = require('./config').db || process.env.db;
 //heroku的寫法
 var uristring = 
   process.env.MONGOLAB_URI || 
