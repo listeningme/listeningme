@@ -21,7 +21,11 @@ module.exports = function (app) {
   app.get('/get/UnitsOnSameLocation', controllers.home.UnitsOnSameLocation);
   //傳送查詢結果為沒有的意見回饋
   app.post('/noResaultFeedBack', controllers.home.noResaultFeedBack);
+  //傳送單一法條勘誤回饋
+  app.post('/sendLawErrFeedback', controllers.home.sendLawErrFeedback);
 
+
+  
   //-------後端
   app.get('/bk', controllers.bk.index);
   //查詢全階層tag

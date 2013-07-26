@@ -22,5 +22,6 @@ exports.Firsttag = mongoose.model('Firsttag');
 exports.Secondtag = mongoose.model('Secondtag');
 exports.Alltag = mongoose.model('Alltag');
 exports.Noresaultfeedback = mongoose.model('Noresaultfeedback');
+exports.Sendlawerrfeedback = mongoose.model('Sendlawerrfeedback');
 
 

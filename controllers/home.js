@@ -137,6 +137,16 @@ function noResaultFeedBack(req,res,next){
     res.end('success');
   }));
 }
+function sendLawErrFeedback (req,res,next){
+  (new models.Sendlawerrfeedback({
+    type_sel:req.body.type_sel,
+    content:req.body.content,
+    email:req.body.email,
+    lawid:req.body.lawid
+  })).save(utils.checkError(next, function () {
+    res.end('success');
+  }));
+}
 
 module.exports = {
   index: indexAction,
@@ -144,6 +154,7 @@ module.exports = {
   search:search,
   lawDetails:lawDetails,
   lawListsOnSameLocation:lawListsOnSameLocation,
+  sendLawErrFeedback:sendLawErrFeedback,
   location:location,
   UnitsOnSameLocation:UnitsOnSameLocation,
   noResaultFeedBack:noResaultFeedBack

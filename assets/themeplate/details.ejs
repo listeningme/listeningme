@@ -4,12 +4,57 @@
           <div class="wrapper_c">
             <div class="addon animated fadeInDownBig">
             <ul class="tabs-nav three-items" style="height:50px;">
-                <li>本法條經過組織認證<img src="/img/diploma1-78.png" class="
+                <li ng-click="checklaw=!checklaw" style="cursor:pointer">本法條經過組織認證<img src="/img/diploma1-78.png" class="
             addon_pic"/></li>
-                <li>對你有幫助嗎？贊助我們<img src="/img/sell.png" class="addon_pic"/></li>
-                <li>錯誤回報<img src="/img/msg.png" class="addon_pic"/></li>
+                <li ng-click="helpforyou=!helpforyou;" style="cursor:pointer">對你有幫助嗎？贊助我們<img src="/img/sell.png" class="addon_pic"/></li>
+                <li ng-click="poperrorrequest=!poperrorrequest" style="cursor:pointer">錯誤回報<img src="/img/msg.png" class="addon_pic"/></a></li>
             </ul>
           </div>
+          
+          <!-- 法條內容錯誤意見回饋 -->
+          <div ng-show="poperrorrequest" class="errdivsent" ng-class="poperrorrequest? 'animated bounceInDown' : ''">
+            <div class="well">
+                <div class="wrapper">
+                <h2>感謝您使用回饋系統！</h2>
+                若您發現法條部分有誤，請透過下面選項給予我們回饋，我們將優先去處理您的建議，感謝！
+                <h4>錯誤類別</h4>
+                <select ng-change="selerrfeedback(senderrrequestsel)" ng-model="senderrrequestsel" ng-options="m.name_en as m.name_zh for m in senderrrequest"></select>
+                <h4>聯絡Email:</h4>
+                <input type="text" ng-model="email" style="width:300px"/>
+                <div>
+                    <h4 ng-show="senderrrequestsel == '內容有誤'">您願意幫我們勘誤嗎？<h4>
+                    <h4 ng-show="senderrrequestsel == '資料過期'">資料過期詳情<h4>
+                    <h4 ng-show="senderrrequestsel == '其他建議'">其他建議<h4>
+                    <textarea cols="150" id="rule_content" name="rule[content]" rows="10" data-validate="true" ng-model="err_content" value="{{err_content}}"></textarea>
+                </div>
+                <a class="btn btn-large btn-success" ng-click="senderrdata()">送出</a>
+                <a class="btn btn-large" ng-click="poperrorrequest=!poperrorrequest">取消</a>
+                </div>
+             </div>
+           </div>
+           <!--  // -->
+           <!-- 對你有幫助嗎？ -->
+            <div ng-show="helpforyou" class="errdivsent" ng-class="helpforyou? 'animated bounceInDown' : ''">
+                <div class="well">
+                    <div class="wrapper">
+                        <h3>我們整理的資料對你有幫助嗎？請您贊助我們</h3>
+                        <p>福利請聽團隊致力於福利法條系統的查詢。</p>
+
+                        <h4>Email:tw.listening.service@gmail.com</h4>
+                    </div>
+                </div>
+            </div>
+           <!--  // -->
+           <!-- 認證簡介 -->
+           <div ng-show="checklaw" class="errdivsent" ng-class="checklaw? 'animated bounceInDown' : ''">
+                <div class="well">
+                    <div class="wrapper">
+                        <h3>認證簡介</h3>
+                    </div>
+                </div>
+            </div>
+           
+           <!--  // -->
           <br/><br/>
             <h1 class="tt1_a">{{lawdatas[0].title}}</h1>
             <div class="content_a "><markdown></markdown></div>

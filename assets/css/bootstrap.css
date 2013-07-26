@@ -2720,6 +2720,9 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 .dl-horizontal dd,.dl-horizontal dt{
   padding: 5px;
 }
+.errdivsent{
+  margin-left:-400px;left:50%;margin-top:-200px;top:50%;height:600px;width:800px;z-index:999;position:fixed;
+}
 .marker-wrapper{position:relative;width:70px;height:70px;margin:0 auto;}
 .marker-wrapper:after{content:'';position:absolute;left:30%;right:30%;height:5%;bottom:-27%;z-index:-1;-webkit-box-shadow:0 5px 20px rgba(0,0,0,0.5);box-shadow:0 5px 20px rgba(0,0,0,0.5);-webkit-border-radius:50%;border-radius:50%;background:rgba(0,0,0,0.1)}
 .marker{display:block;position:absolute;width:100%;height:100%;background:#ef705b;-webkit-border-radius:50% 50% 0 50%;border-radius:50% 50% 0 50%;border:1px #ef605b solid;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);}

@@ -112,6 +112,37 @@
               $http.get('/get/lawDetails?_id='+$stateParams.id).success(function (data) {
                   $scope.lawdatas = data;
                 });
+              $scope.senderrrequest = [{name_zh:'資料過期',name_en:'資料過期'},
+                                {name_zh:'內容有誤',name_en:'內容有誤'},
+                                {name_zh:'其他建議',name_en:'其他建議'}];
+              $scope.selerrfeedback =function (sel){
+                if(sel == '內容有誤'){
+                    $scope.err_content =  $scope.lawdatas[0].content;
+                }else{
+                    $scope.err_content = '';
+                }
+              }
+              $scope.senderrdata = function (){
+                $http({
+                    url:'/sendLawErrFeedback',
+                    method:'POST',
+                    data:{
+                      lawid:$scope.lawdatas[0]._id,
+                      type_sel:$scope.senderrrequestsel,
+                      content:$scope.err_content,
+                      email:$scope.email
+                    },
+                    }).success(function (data, status, headers, config) {
+                      if(data == 'success'){
+                        alert('感謝您的回饋，已傳送成功！')
+                        $scope.poperrorrequest=!$scope.poperrorrequest;
+                        $scope.senderrrequestsel = '';
+                        $scope.err_content = '';
+                        $scope.email = '';
+                      }
+                });
+                
+              }
             }
         })
         .state('aboutus',{
