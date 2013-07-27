@@ -20,6 +20,10 @@
     <!-- Also a way to navigate -->
     <script type="text/javascript">
       var myapp = angular.module('turquoiseapp', ['ui.state','ngStorage','ui.bootstrap']) ;
+      var _str_type;
+      myapp.factory('search_zh',function(){
+        return _str_type;
+      })
       myapp.config(function($stateProvider, $urlRouterProvider,$routeProvider){
       // For any unmatched url, send to /route1
       $urlRouterProvider.otherwise("/index");
@@ -30,6 +34,7 @@
             url: "/index",
             // url: "/route1/{contactId:[0-9]{1,8}}",
             templateUrl: "/themeplate/index.ejs",
+            factory:'search_zh',
             controller:function ($scope,$stateParams,$http,$location){
               $http.get('/indexlaws').success(function (data) {
                   $scope.datas = data;
@@ -57,20 +62,26 @@
               $scope.goSearchArrLocation.push($scope.location);
               //--------------------------------------------------------------
               $scope.gosearch =function(){
-                  var _ck = 0;
+                  search_zh = $scope.selected
+                  console.log(search_zh);
+                  var _sresault = $scope.selected.split(' ');
+                  var _tmpArr = [];
                   angular.forEach($scope.allTagdatas, function(v, k){
-                     if(v.name_zh == $scope.selected){
-                        $scope.goSearchArrTag.push(v.name_en)
-                        _ck = 1;
-                     }
-                  });     
-                  if(_ck ==0){
-                    $scope.goSearchArrGeneral.push($scope.selected);
-                  }
-                  var _gen = $scope.goSearchArrGeneral.toString();
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(v.name_zh == v1){
+                            $scope.goSearchArrTag.push(v.name_en);
+                            _tmpArr.push(v.name_zh);
+                            //console.log($scope.goSearchArrTag)
+                           // _ck = 1;
+                         }
+                     });
+                  });  
+                  angular.forEach(_tmpArr, function(v1, k1){
+                       removeA(_sresault, v1);
+                  });
+                  //抓到要general的搜尋
+                  var _gen = _sresault.toString();
                   var _tag = $scope.goSearchArrTag.toString();
-                  //console.log(_tag);
-                  //$location.path('#/search/?general='+_gen);
                   if(_tag == ''){
                     _tag = null
                   }
@@ -153,6 +164,7 @@
         .state('search',{
            url: "/search/?general&tag&location",
             templateUrl: "/themeplate/index.ejs",
+            factory:'search_zh',
             controller:function ($scope,$stateParams,$http,$location){
               //console.log($stateParams);
               $scope.searchblank = true;
@@ -165,7 +177,8 @@
                   }
                   $scope.datas =data;
                 });
-              $scope.selected = undefined;
+              console.log(search_zh); 
+              $scope.selected = search_zh;
               $http.get('/bk/getAllFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
@@ -195,20 +208,25 @@
               // console.log($scope.goSearchArrGeneral);
               // console.log($scope.goSearchArrTag);
               $scope.gosearch =function(){
-                  var _ck = 0;
+                  search_zh = $scope.selected
+                  var _sresault = $scope.selected.split(' ');
+                  var _tmpArr = [];
                   angular.forEach($scope.allTagdatas, function(v, k){
-                     if(v.name_zh == $scope.selected){
-                        $scope.goSearchArrTag.push(v.name_en)
-                        _ck = 1;
-                     }
-                  });     
-                  if(_ck ==0){
-                    $scope.goSearchArrGeneral.push($scope.selected);
-                  }
-                  var _gen = $scope.goSearchArrGeneral.toString();
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(v.name_zh == v1){
+                            $scope.goSearchArrTag.push(v.name_en);
+                            _tmpArr.push(v.name_zh);
+                            //console.log($scope.goSearchArrTag)
+                           // _ck = 1;
+                         }
+                     });
+                  });  
+                  angular.forEach(_tmpArr, function(v1, k1){
+                       removeA(_sresault, v1);
+                  });
+                  //抓到要general的搜尋
+                  var _gen = _sresault.toString();
                   var _tag = $scope.goSearchArrTag.toString();
-                  //console.log(_tag);
-                  //$location.path('#/search/?general='+_gen);
                   if(_tag == ''){
                     _tag = null
                   }
@@ -279,6 +297,18 @@
         }
       };
     });
+
+    //比較兩個array 去掉相同者
+    function removeA(arr) {
+        var what, a = arguments, L = a.length, ax;
+        while (L > 1 && arr.length) {
+            what = a[--L];
+            while ((ax= arr.indexOf(what)) !== -1) {
+                arr.splice(ax, 1);
+            }
+        }
+        return arr;
+    }
     </script>
     <% include footer %>
   </body>
