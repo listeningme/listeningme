@@ -30,8 +30,10 @@ module.exports = function (app) {
   app.get('/bk', controllers.bk.index);
   //查詢全階層tag
   app.get('/bk/getAllTagManage', controllers.bk.getAllTagManage);
-  //更新全階層tag 
-  //app.post('/bk/updateAllTagManage', controllers.bk.updateAllTagManage);
+  //新增全階層tag的某個tag 
+  app.post('/bk/addThisTagManage', controllers.bk.addThisTagManage);
+  //更新全階層tag的某個tag 
+  app.post('/bk/updateThisTagManage', controllers.bk.updateThisTagManage);
   //在全階層tag新增一個第一階層tags
   app.post('/bk/addAllTagManageFirstTag',controllers.bk.addAllTagManageFirstTag);
   //把這個tags編輯存進去
@@ -67,4 +69,9 @@ module.exports = function (app) {
   //新增福利機關
   app.post('/bk/addNewUnit', controllers.bk.addNewUnit);
   //app.get('/addneworg', controllers.low.addNewOrg);
+  //取得所有子類別清單
+  app.get('/bk/getSecondCategoryTag', controllers.bk.getSecondCategoryTag);
+  //新增子類別清單
+  app.post('/bk/addSecondCategoryTag', controllers.bk.addSecondCategoryTag);
+
 }

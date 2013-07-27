@@ -55,7 +55,7 @@ function getAllSecondTag(req, res, next){
     });
 }
 function addNewSecondTag(req, res, next){
-	(new models.Secandtag({
+	(new models.Secondtag({
 		name_zh:req.body.name_zh,
 		name_en:req.body.name_en
 	})).save(utils.checkError(next, function () {
@@ -174,10 +174,41 @@ function addNewUnit(req, res, next) {
 		res.end('success');
 	}));
 }
+function getSecondCategoryTag(req,res,next){
+	var query = models.Secondcategorytag.find({});
+	 query.exec(function(error, results){
+       if(results != ''){
+       		res.send(results)
+       }
+    });
+}
+
+function addSecondCategoryTag(req,res,next){
+	(new models.Secondcategorytag({
+		name_zh:req.body.name_zh,
+		name_en:req.body.name_en,
+	})).save(utils.checkError(next, function () {
+		res.end('success');
+	}));
+}
+function addThisTagManage(req,res,next){
+	(new models.Alltag({
+		first_name_en : req.body.first_name_en,
+		second_name_en : req.body.second_name_en,
+		third_name_en : req.body.third_name_en,
+	})).save(utils.checkError(next, function () {
+		res.end('success');
+	}));
+}
+function updateThisTagManage(req,res,next){
+
+}
 module.exports = {
   index: indexAction,
   getAllTagManage:getAllTagManage,
   updateAllTagManage:updateAllTagManage,
+  addThisTagManage:addThisTagManage,
+  updateThisTagManage:updateThisTagManage,
   saveThisTagManage:saveThisTagManage,
   addAllTagManageFirstTag:addAllTagManageFirstTag,
   getAllFirstTag:getAllFirstTag,
@@ -194,6 +225,9 @@ module.exports = {
   getAllMaxValue:getAllMaxValue,
   addNewMaxValue:addNewMaxValue,
   getAllUnit:getAllUnit,
-  addNewUnit:addNewUnit
+  addNewUnit:addNewUnit,
+  getSecondCategoryTag:getSecondCategoryTag,
+  addSecondCategoryTag:addSecondCategoryTag,
+
 
 };

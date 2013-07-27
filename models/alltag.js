@@ -11,4 +11,4 @@ var alltagSchema = new Schema({
 	updateAt:   		  {type: Date, default: Date.now},
 	createAt:      		  {type: Date, default: Date.now},
 });
-mongoose.model('Alltag', alltagSchema);
+mongoose.model('Alltag', alltagSchema); 

@@ -154,7 +154,7 @@
            url: "/search/?general&tag&location",
             templateUrl: "/themeplate/index.ejs",
             controller:function ($scope,$stateParams,$http,$location){
-              console.log($stateParams);
+              //console.log($stateParams);
               $scope.searchblank = true;
               $http.get('/get/location').success(function (data) {
                   $scope.lodatas = data;
@@ -192,8 +192,8 @@
                      $scope.goSearchArrTag.push(v);
                   });  
               }
-              console.log($scope.goSearchArrGeneral);
-              console.log($scope.goSearchArrTag);
+              // console.log($scope.goSearchArrGeneral);
+              // console.log($scope.goSearchArrTag);
               $scope.gosearch =function(){
                   var _ck = 0;
                   angular.forEach($scope.allTagdatas, function(v, k){

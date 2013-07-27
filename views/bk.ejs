@@ -8,8 +8,9 @@
     <a href="/bk/#/law_manage">法條管理</a>
     <a href="/bk/#/unit_manage">機關管理</a>
     <a href="/bk/#/1sttag_manage">第一階層管理</a>
-    <a href="/bk/#/2ndtag_manage">第二階層管理</a>
+    <a href="/bk/#/2ndtag_manage">身分階層管理</a>
     <a href="/bk/#/alltag_manage">關鍵字所有階層管理</a>
+    <a href="/bk/#/secondcategorytag_manage">子類別階層管理</a>
     <div ui-view></div> 
     <!-- Also a way to navigate -->
     <script type="text/javascript">
@@ -195,9 +196,13 @@
                 
                 $http.get('/bk/getAllFirstTag').success(function (data) {
                   $scope.firsttagdatas = data;
+                  
                 });
                 $http.get('/bk/getAllSecondTag').success(function (data) {
                   $scope.Secandtagdatas = data;
+                });
+                $http.get('/bk/getSecondCategoryTag').success(function (data) {
+                  $scope.SecondCategoryTagdatas = data;
                 });
                 $http.get('/bk/getAllTagManage').success(function (data) {
                     $scope.datas = data;
@@ -215,6 +220,37 @@
                         });
                     })
                 };
+                $scope.addidentify = function (first,sel){
+                    console.log(sel);
+                    $http({
+                      url:'/bk/addThisTagManage',
+                      method:'POST',
+                      data:{
+                        first_name_en:first,
+                        second_name_en:sel,
+                        third_name_en:''
+                      },
+                   }).success(function (data, status, headers, config) {
+                        $http.get('/bk/getAllTagManage').success(function (data) {
+                            $scope.datas = data;
+                        });
+                    })
+                }
+                $scope.addsecondca = function (first,sel){
+                    $http({
+                      url:'/bk/addThisTagManage',
+                      method:'POST',
+                      data:{
+                        first_name_en:first,
+                        second_name_en:sel,
+                        third_name_en:''
+                      },
+                   }).success(function (data, status, headers, config) {
+                        $http.get('/bk/getAllTagManage').success(function (data) {
+                            $scope.datas = data;
+                        });
+                    })
+                }
                 $scope.save = function (index){
                     
                     $http({
@@ -276,6 +312,32 @@
                         }
                       }).success(function (data, status, headers, config) {
                           $http.get('/bk/getAllSecondTag').success(function (data) {
+                              $scope.datas = data;
+                          });
+                      })
+                  }
+                }
+            }
+        })
+        .state('secondcategorytag_manage', {
+            url: "/secondcategorytag_manage",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/secondcategorytag_manage.ejs",
+            controller:function ($scope,$stateParams,$http){
+                $http.get('/bk/getSecondCategoryTag').success(function (data) {
+                  $scope.datas = data;
+                });
+                $scope.add = function(){
+                  if($scope.name_zh != '' && $scope.name_en != ''){
+                      $http({
+                        url:'/bk/addSecondCategoryTag',
+                        method: "POST",
+                        data:{
+                            name_zh:$scope.name_zh,
+                            name_en:$scope.name_en
+                        }
+                      }).success(function (data, status, headers, config) {
+                          $http.get('/bk/getSecondCategoryTag').success(function (data) {
                               $scope.datas = data;
                           });
                       })
