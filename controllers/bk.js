@@ -12,7 +12,7 @@ function getAllTagManage(req, res, next){
 	var query = models.Alltag.find({});
 	 query.exec(function(error, results){
         if(results != ''){
-        	console.log(results);
+        	//console.log(results);
        		res.send(results)
         }
     });
@@ -74,13 +74,39 @@ function getNewLaw(req, res, next){
 	var query = models.Lawdetails.find({'_id':req.query._id});
 	 query.exec(function(error, results){
         if(results != ''){
-        	console.log(results);
+        	//console.log(results);
        		res.send(results)
         }
     });
 }
 function updateEditLaw(req, res, next){
-	console.log(req.body.unit);
+	//console.log(req.body.unit);
+	//console.log(req.body.max_content);
+	if(!req.body.max_content ){
+		req.body.max_content = ''
+	}
+	if(!req.body.max_type ){
+		req.body.max_type = ''
+	}
+	if(!req.body.title ){
+		req.body.title = ''
+	}
+	if(!req.body.content ){
+		req.body.content = ''
+	}
+	if(!req.body.url ){
+		req.body.url = ''
+	}
+	if(!req.body.location ){
+		req.body.location = ''
+	}
+	if(!req.body.unit ){
+		req.body.unit = ''
+	}
+	if(!req.body.firsttag ){
+		req.body.firsttag = ''
+	}
+
 	models.Lawdetails.update({ '_id': req.body._id },
 	 {$set:{
 	 	title : req.body.title,
@@ -92,7 +118,7 @@ function updateEditLaw(req, res, next){
 	 	unit: req.body.unit,
 	 	firsttag:req.body.firsttag
 	 }}, function (err, numberAffected, raw) {
-	  console.log(err);
+	  //console.log(err);
 	  if (err) return handleError(err);
 
 	  if(numberAffected == 1){
@@ -111,7 +137,7 @@ function deleteLaw(req,res,next){
 }
 
 function addNewLaw(req, res, next) {
-	console.log(req.body.firsttag);
+	//console.log(req.body.firsttag);
 	(new models.Lawdetails({
 		title:req.body.title,
 		content:req.body.content,
