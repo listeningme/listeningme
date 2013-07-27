@@ -82,6 +82,7 @@ function getNewLaw(req, res, next){
 function updateEditLaw(req, res, next){
 	//console.log(req.body.unit);
 	//console.log(req.body.max_content);
+	console.log(req.body.secondtag);
 	if(!req.body.max_content ){
 		req.body.max_content = ''
 	}
@@ -106,6 +107,9 @@ function updateEditLaw(req, res, next){
 	if(!req.body.firsttag ){
 		req.body.firsttag = ''
 	}
+	if(!req.body.secondtag){
+		req.body.secondtag= ''
+	}
 
 	models.Lawdetails.update({ '_id': req.body._id },
 	 {$set:{
@@ -116,7 +120,8 @@ function updateEditLaw(req, res, next){
 	 	max_content : req.body.max_content,
 	 	location: req.body.location,
 	 	unit: req.body.unit,
-	 	firsttag:req.body.firsttag
+	 	firsttag:req.body.firsttag,
+	 	secondtag:req.body.secondtag
 	 }}, function (err, numberAffected, raw) {
 	  //console.log(err);
 	  if (err) return handleError(err);
@@ -146,7 +151,8 @@ function addNewLaw(req, res, next) {
 		url:req.body.url,
 		max_type:req.body.max_type,
 		max_content:req.body.max_content,
-		firsttag:req.body.firsttag
+		firsttag:req.body.firsttag,
+		secondtag:req.body.secondtag
 	})).save(utils.checkError(next, function () {
 		res.end('success');
 	}));

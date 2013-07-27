@@ -39,6 +39,18 @@
                     <ul>
                      
                 </dd>
+                <dt>身分關鍵字</dt>
+                <dd>
+                    <ul>
+                        <li > 
+                            <a ng-repeat="t in identifytagdatas" style="margin-left:10px;"class="btn" ng-click="deleteidentifytag(t.name_en)">{{t.name_zh}}</a>
+                        </li>
+                        <li>
+                            <select ng-model="selidentifytags" ng-options="m.name_en as m.name_zh for m in identifydatas" ></select> <a class="btn" ng-click="addidentifytags()">新增tag</a>
+                        </li>
+                    <ul>
+                     
+                </dd>
                 <dd>
                     <a class="btn" ng-click="add()">確認送出</a>
                     <a class="btn" href="/bk/#/law_manage">取消</a>
