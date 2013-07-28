@@ -116,7 +116,7 @@
            url: "/details/:id",
             templateUrl: "/themeplate/details.ejs",
             controller:function ($scope,$stateParams,$http){
-              console.log($stateParams.id);
+              //console.log($stateParams.id);
               //var converter = new Showdown.converter();
               $http.get('/get/lawDetails?_id='+$stateParams.id).success(function (data) {
                   $scope.lawdatas = data;
@@ -166,7 +166,49 @@
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
             controller:function ($scope,$stateParams,$http,$location){
-              //console.log($stateParams);
+              $http.get('/bk/getAllFirstTag').success(function (data) {
+                  $scope.allTagdatas = data;
+                  var firsttagArr = [];
+                  angular.forEach(data, function(v, k){
+                    firsttagArr.push(v.name_zh)
+                  });
+                  $scope.states = firsttagArr;
+                  //parse初始網址--------------------------------
+                  var _tmpstring = '';                   
+                  if($stateParams.general != 'null'){
+                      var _init_general = $stateParams.general.split(',');
+                  }
+                  if($stateParams.tag != 'null'){
+                      var _init_tag_tmp = $stateParams.tag.split(',');
+                  }
+                  var _init_tag = [];
+                  if($stateParams.tag != 'null'){
+                    angular.forEach(_init_tag, function(v, k){
+                      angular.forEach(data, function(v1, k1){
+                           if(v1.data.name_en == v){
+                              _init_tag.push(v1.data.name_zh);
+                           }
+                      });
+                    });
+                  }
+                  var _init_tmp = [];
+                  if($stateParams.general != 'null'){
+                      angular.forEach(_init_general, function(v, k){
+                        _init_tmp.push(v);
+                      });
+                  }
+                  if($stateParams.tag != 'null'){
+                      angular.forEach(_init_tag, function(v, k){
+                        _init_tmp.push(v);
+                      });
+                  }
+                  var _init_searchresault = '';
+                  angular.forEach(_init_tmp, function(v, k){
+                     _init_searchresault += v+' ';
+                  });
+                  $scope.selected = _init_searchresault
+                  // -------------------------------------------
+              });
               $scope.searchblank = true;
               $http.get('/get/location').success(function (data) {
                   $scope.lodatas = data;
@@ -177,8 +219,6 @@
                   }
                   $scope.datas =data;
                 });
-              console.log(search_zh); 
-              $scope.selected = search_zh;
               $http.get('/bk/getAllFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
@@ -297,7 +337,6 @@
         }
       };
     });
-
     //比較兩個array 去掉相同者
     function removeA(arr) {
         var what, a = arguments, L = a.length, ax;
