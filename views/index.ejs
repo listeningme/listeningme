@@ -4,10 +4,9 @@
   <body>
     <% include header %>  
     <div ui-view></div> 
-
-    <div id="moverightFr" class="moverightFr">
-      <div class="mouserightFr" style="width:60px;height:100px;background:#333;" lsdiv>
-        <ul>
+    <div id="moverightFr" ng-class="aaa? 'animated bounceInRight modelsdiv' : 'moverightFr'" ng-controller="likelistCtrl">
+      <div class="mouserightFr" style="width:60px;height:100px;background:#333;">
+        <ul  ng-click="aaa =!aaa" style="z-index:9999">
           <li>喜</li><li>
           </li><li>好</li><li>
           </li><li>清</li><li>
@@ -15,15 +14,49 @@
         </li></ul>
       </div>
       <div class="rightFr">
+        <ul style="padding:10px;">
+          <li><h3>喜歡搜尋結果清單</h3></li>
+          <li>
+            <ul>
+              <li>
+                <a ng-repeat="ki in likesearchshow" ng-click="sendthisselected(ki.content)">{{ki.content}}</a>
+              </li>
+            <ul>
+          </li>
+          <br/><br/>
+          <li><h3>喜歡法條清單</h3></li>
+          <li>
+            <ul>
+              <li ng-repeat="i in likelistshow"><a href="/#/details/{{i._id}}" style="cursor:pointer">{{i.title}}</a></li>
+            </ul>  
+          </li>
+
+        </ul>
+        
+
       </div>
     </div>
     <!-- Also a way to navigate -->
     <script type="text/javascript">
+      
       var myapp = angular.module('turquoiseapp', ['ui.state','ngStorage','ui.bootstrap']) ;
       var _str_type;
       myapp.factory('search_zh',function(){
         return _str_type;
       })
+      // 喜歡列表清單-------------------------------------------------  
+      myapp.controller('likelistCtrl',function($scope,$localStorage,search_zh){
+          $scope.$storage = $localStorage.$default({
+              likelawlist: [],
+              likesearchlist:[]
+          });
+          $scope.likelistshow = $scope.$storage.likelawlist;
+          $scope.likesearchshow = $scope.$storage.likesearchlist;
+          $scope.sendthisselected = function (content){
+            //這邊要做顛選擇條過去搜尋
+          }
+      })
+      //-----------------------------------------------------------
       myapp.config(function($stateProvider, $urlRouterProvider,$routeProvider){
       // For any unmatched url, send to /route1
       $urlRouterProvider.otherwise("/index");
@@ -35,7 +68,13 @@
             // url: "/route1/{contactId:[0-9]{1,8}}",
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
-            controller:function ($scope,$stateParams,$http,$location){
+            controller:function ($scope,$stateParams,$http,$location,$localStorage){
+              $scope.$storage = $localStorage;
+              $scope.likethislaw =function (id,title){
+                var _arrtmp = {title:title,_id:id};
+                $scope.$storage.likelawlist.push(_arrtmp);
+                //console.log($scope.$storage.likelawlist);
+              }
               $http.get('/indexlaws').success(function (data) {
                   $scope.datas = data;
                   var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
@@ -135,8 +174,12 @@
                   $scope.goSearchArrLocation.push(t);
                   //console.log($scope.goSearchArrLocation);
               }
-
-              
+              $scope.savethissearchtag = function(){
+                  
+                  var _arrtmp = {location:$scope.location,content:$scope.selected}
+                  //console.log(_arrtmp);
+                  $scope.$storage.likesearchlist.push(_arrtmp);
+              }
             }
         })
         .state('help', {
@@ -207,7 +250,14 @@
            url: "/search/?general&tag&location",
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
-            controller:function ($scope,$stateParams,$http,$location){
+            controller:function ($scope,$stateParams,$http,$location,$localStorage){
+              $scope.$storage = $localStorage;
+              $scope.likethislaw =function (id,title){
+                var _arrtmp = {title:title,_id:id};
+                $scope.$storage.likelawlist.push(_arrtmp);
+                //console.log($scope.$storage.likelawlist);
+              }
+              
               $http.get('/bk/getAllFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
@@ -252,7 +302,8 @@
                   angular.forEach(_init_tmp, function(v, k){
                      _init_searchresault += v+' ';
                   });
-                  $scope.selected = _init_searchresault
+                  $scope.selected = _init_searchresault;
+
                   // -------------------------------------------
               });
               $scope.searchblank = true;
@@ -386,6 +437,12 @@
                         }
                     })
               }
+              $scope.savethissearchtag = function(){
+                  
+                  var _arrtmp = {location:$scope.location,content:$scope.selected}
+                  console.log(_arrtmp);
+                  $scope.$storage.likesearchlist.push(_arrtmp);
+              }
 
             }
         })
@@ -414,15 +471,16 @@
             }
         };
     });
-    myapp.directive('lsdiv',function(){
-      return {
-        link: function($scope, elem, iAttrs, controller) {
-            elem.bind('click',function(){
-              elem.$parent.addClass('active movelsdiv')
-            })
-        }
-      };
-    });
+    // myapp.directive('lsdiv',function(){
+    //   return {
+    //     link: function($scope, elem, iAttrs, controller) {
+    //         elem.bind('click',function(){
+    //           console.log(elem.parent().addClass('animated modelsdiv fadeInRight'))
+    //           // elem.addClass('A');
+    //         })
+    //     }
+    //   };
+    // });
     //比較兩個array 去掉相同者
     function removeA(arr) {
         var what, a = arguments, L = a.length, ax;

@@ -7,14 +7,21 @@
           <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
       </div>
       <div class="span12" style="height:120px;" ng-hide="searchblank"></div>
+
       <ng-include src="'/themeplate/account.ejs'"></ng-include>
       <h5 class="widget-name" >
       </h5>
       <ng-include src="'/themeplate/search_header.ejs'"></ng-include>
+      <div class="well invoice" style="text-align:center;cursor:pointer" ng-show="!noneresult" ng-click="savethissearchtag()">
+      儲存此搜尋結果
+      </div>
       <div class="well invoice" ng-class="searchblank? 'animated fadeInUp' : ''">
           <ul class="repo_div_fr clear_sfr" ng-repeat="i in datas">
             <div class="invoice-head" style="padding:0px 10px;">
-              <a href="/#/details/{{i._id}}" style="float:left;padding-left:20px;"><h3 style="line-height:20px">{{i.title}}</h3></a>
+              <a class="btn" ng-click="likethislaw(i._id,i.title)">l</a>
+              <a href="/#/details/{{i._id}}" style="float:left;padding-left:20px;">
+                <h3 style="line-height:20px">{{i.title}}</h3>
+              </a>
               <ul class="pull-right minus-list invoice-data" style="float:left;padding-top:10px;padding-left:20px;">
                 <li style="width:450px;height:20px;overflow:hidden">內容預覽：{{i.content}}</li>
               </ul>

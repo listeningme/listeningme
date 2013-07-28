@@ -901,10 +901,11 @@ span.green { background-color: #41CA83; }
     height: 400px;
     position: fixed;
     z-index: 29;
-   
 }
 .moverightFr{
    right: -310px;
+
+   /*right: -110px;*/
 }
 .modelsdiv{
   right: -120px; 
