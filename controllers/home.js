@@ -33,7 +33,7 @@ function indexAction(req, res, next) {
   res.render('index');
 }
 function indexlaws(req, res, next) {
-	var query = models.Lawdetails.find({});
+	var query = models.Lawdetails.find({location:req.query.location});
 	 query.exec(function(error, results){
         if(results != ''){
        		res.send(results)

@@ -75,7 +75,7 @@
                 $scope.$storage.likelawlist.push(_arrtmp);
                 //console.log($scope.$storage.likelawlist);
               }
-              $http.get('/indexlaws').success(function (data) {
+              $http.get('/indexlaws?location=TPE').success(function (data) {
                   $scope.datas = data;
                   var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
                   angular.forEach(data, function(v, k){
@@ -172,6 +172,51 @@
               $scope.changelocation = function(t){
                   $scope.goSearchArrLocation.length = 0;
                   $scope.goSearchArrLocation.push(t);
+                  if($scope.selected == undefined){
+                    $http.get('indexlaws?location='+$scope.goSearchArrLocation[0]).success(function (data) {
+                         $scope.datas = data;
+                         var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
+                          angular.forEach(data, function(v, k){
+                            if (v.max_type == 'NT.'){
+                              if(v.max_content!= undefined){
+                                _tmp_nt =_tmp_nt+Number(v.max_content);
+                              } 
+                            }
+                            if (v.max_type == '輔具'){
+                              if(v.max_content!= undefined){
+                                _tmp_ft.push(v.max_content); 
+                              }
+                            }
+                            if (v.max_type == '辦法'){
+                              if(v.max_content!= undefined){
+                                _tmp_bf.push(v.max_content);  
+                              }
+                              //console.log(_tmp_bf);
+                            }
+                            if (v.max_type == '名冊'){
+                              if(v.max_content!= undefined){
+                                  _tmp_mc.push(v.max_content);
+                              }
+                            }
+                            if (v.max_type == '服務'){
+                              if(v.max_content!= undefined){
+                                  _tmp_fw.push(v.max_content);
+                              }
+                            }
+                            if (v.max_type == '證件'){
+                              if(v.max_content!= undefined){
+                                  _tmp_cc.push(v.max_content);
+                              }
+                            }
+                          });
+                          $scope._tmp_nt= _tmp_nt;
+                          $scope._tmp_ft= _tmp_ft;
+                          $scope._tmp_bf= _tmp_bf;
+                          $scope._tmp_mc= _tmp_mc;
+                          $scope._tmp_fw= _tmp_fw;
+                          $scope._tmp_cc= _tmp_cc;
+                    });
+                  }
                   //console.log($scope.goSearchArrLocation);
               }
               $scope.savethissearchtag = function(){
@@ -415,6 +460,34 @@
               $scope.changelocation = function(t){
                   $scope.goSearchArrLocation.length = 0;
                   $scope.goSearchArrLocation.push(t);
+
+                  search_zh = $scope.selected
+                  var _sresault = $scope.selected.split(' ');
+                  var _tmpArr = [];
+                  angular.forEach($scope.allTagdatas, function(v, k){
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(v.name_zh == v1){
+                            $scope.goSearchArrTag.push(v.name_en);
+                            _tmpArr.push(v.name_zh);
+                            //console.log($scope.goSearchArrTag)
+                           // _ck = 1;
+                         }
+                     });
+                  });  
+                  angular.forEach(_tmpArr, function(v1, k1){
+                       removeA(_sresault, v1);
+                  });
+                  //抓到要general的搜尋
+                  var _gen = _sresault.toString();
+                  var _tag = $scope.goSearchArrTag.toString();
+                  if(_tag == ''){
+                    _tag = null
+                  }
+                  if(_gen == ''){
+                    _gen = null
+                  }
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
+
                   //console.log($scope.goSearchArrLocation);
               }
 
