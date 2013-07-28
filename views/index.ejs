@@ -178,12 +178,14 @@
                   if($stateParams.general != 'null'){
                       var _init_general = $stateParams.general.split(',');
                   }
+                 // console.log(data);
                   if($stateParams.tag != 'null'){
                       var _init_tag_tmp = $stateParams.tag.split(',');
                   }
+                 // console.log(_init_tag_tmp);
                   var _init_tag = [];
                   if($stateParams.tag != 'null'){
-                    angular.forEach(_init_tag, function(v, k){
+                    angular.forEach(_init_tag_tmp, function(v, k){
                       angular.forEach(data, function(v1, k1){
                            if(v1.name_en == v){
                               _init_tag.push(v1.name_zh);
@@ -191,6 +193,7 @@
                       });
                     });
                   }
+                  //console.log(_init_tag);
                   var _init_tmp = [];
                   if($stateParams.general != 'null'){
                       angular.forEach(_init_general, function(v, k){
