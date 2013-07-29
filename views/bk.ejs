@@ -11,6 +11,7 @@
     <a href="/bk/#/2ndtag_manage">身分階層管理</a>
     <a href="/bk/#/alltag_manage">關鍵字所有階層管理</a>
     <a href="/bk/#/secondcategorytag_manage">子類別階層管理</a>
+    <a href="/bk/#/parse">parse專區</a>
     <div ui-view></div> 
     <!-- Also a way to navigate -->
     <script type="text/javascript">
@@ -531,6 +532,36 @@
                     }
                   }).success(function (data, status, headers, config) {
                       alert('已刪除！');
+                      $http.get('/bk/getAllLaws').success(function (data) {
+                          $scope.law_manages = data;
+                      });
+                  })
+              }
+            }
+        })
+        .state('parse', {
+            url: "/parse",
+            // url: "/route1/{contactId:[0-9]{1,8}}",
+            templateUrl: "/themeplate/backend/parse.ejs",
+            controller:function ($scope,$stateParams,$http){
+              $scope.add =function (id){
+                  var _arr = []
+                  _arr.push($scope.unit)
+                  $http({
+                    url:'/bk/yqlparseTAO',
+                    method: "POST",
+                    data:{
+                        title:$scope.title,
+                        url:$scope.url,
+                        unit:_arr,
+                        location:$scope.location,
+                    }
+                  }).success(function (data, status, headers, config) {
+                      if(data != 'success'){
+                          alert('失敗！');
+                      }else if(data == 'success'){
+                        console.log('成功')
+                      }
                       $http.get('/bk/getAllLaws').success(function (data) {
                           $scope.law_manages = data;
                       });

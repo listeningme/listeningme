@@ -12,7 +12,8 @@
     "mongoose": "*",
     "request": "*",
     "crypto": "*",
-    "readable-stream": "*"
+    "readable-stream": "*",
+    "yql": "*"
   },
   "repository": {
     "type": "git",

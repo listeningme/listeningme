@@ -4,6 +4,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+
 var app = express();
 //var config = require(path.join(__dirname, '/', 'config.json'));
 
@@ -33,3 +34,9 @@ require(path.join(__dirname, 'models', 'index.js'));
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+
+
+
+
+

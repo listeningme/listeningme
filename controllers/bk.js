@@ -4,6 +4,7 @@
 var models = require('../models/index.js');
 var utils = require('../lib/util');
 var request = require('request');
+var YQL = require('yql');
 
 function indexAction(req, res, next) {
   res.render('bk');
@@ -235,6 +236,90 @@ function addThisTagManage(req,res,next){
 function updateThisTagManage(req,res,next){
 
 }
+
+
+
+
+
+
+
+
+
+function yqlparseTAO(req,res,next){
+	// var query = models.Taoyqlparse.find({});
+	// 	 query.exec(function(error, results){
+	//        if(results != ''){
+	//        		for(var tt in results){
+	//        			//console.log(results[tt].title)
+	//     			(new models.Lawdetails({
+	// 					title:results[tt].title,
+	// 					content:results[tt].content,
+	// 					location:results[tt].location,
+	// 					unit:results[tt].unit,
+	// 					url:results[tt].url,
+	// 				})).save(utils.checkError(next, function () {
+	// 					res.end('success');
+	// 					console.log('done!');
+	// 				}));
+	//        		}
+	//        		//res.send(results)
+	//        }
+	//     });
+	//console.log(req.body.url);
+	// new YQL.exec('select * from data.html.cssselect where url="'+req.body.url+'" and css=".cNone"', function(response) {
+	//   	//console.log(response.query.results.results.table[20].tr[1].td[1].p.content)
+	// 	// var _c ='##法規內容'
+	// 	// for(var yy in response.query.results.results.td.p[0].span.font){
+	// 	// 	_c += '\n'+response.query.results.results.td.p[0].span.font[yy].content
+	// 	// }
+	// 	// console.log(_c);
+
+	// 	// var _c ='##法規內容';
+	// 	// 	_c += '\n'+response.query.results.results.td.span.font.content
+	// 	// console.log(_c);
+
+
+	// 	// var _c ='##法規內容';
+	// 	// 	_c += '\n'+response.query.results.results.td.p.span.font.span[.content
+	// 	// console.log(_c);
+
+	// 	var _c ='##法規內容'
+	// 	for(var yy in response.query.results.results.td.p.span.font.span){
+	// 		_c += '\n'+response.query.results.results.td.p.span.font.span[yy].content
+	// 	}
+	// 	console.log(_c);
+
+		
+	// 	// var _c =''
+	// 	// for (var k in response.query.results.results.div[2].table[0].tr[3].td[1].p ){
+	// 	// 	if(response.query.results.results.div[2].table[0].tr[3].td[1].p[k].strong){
+	// 	// 		if(!response.query.results.results.div[2].table[0].tr[3].td[1].p[k].strong.content){
+	// 	// 			_c += '\n##'+response.query.results.results.div[2].table[0].tr[3].td[1].p[k].strong;
+	// 	// 		}else{
+	// 	// 			_c += '\n##'+response.query.results.results.div[2].table[0].tr[3].td[1].p[k].strong.content;
+	// 	// 		}
+	// 	// 	}
+	// 	// 	_c += '\n'+response.query.results.results.div[2].table[0].tr[3].td[1].p[k].content;
+	// 	// }
+	// 	// var _c = '\n##詳細內容';
+	// 	// _c += '\n'+response.query.results.results.table[20].tr[1].td[1].p.content;
+	// 	// console.log(_c);
+	// 	req.body.url = req.body.url.replace("http://","");
+	// 	(new models.Taoyqlparse({
+	// 		title : req.body.title,
+	// 		content : _c,
+	// 		location : req.body.location,
+	// 		unit : req.body.unit,
+	// 		url:req.body.url
+	// 	})).save(utils.checkError(next, function () {
+	// 		res.end('success');
+	// 	}));
+	// });
+}
+
+
+// Example #1 - Param binding
+
 module.exports = {
   index: indexAction,
   getAllTagManage:getAllTagManage,
@@ -260,6 +345,7 @@ module.exports = {
   addNewUnit:addNewUnit,
   getSecondCategoryTag:getSecondCategoryTag,
   addSecondCategoryTag:addSecondCategoryTag,
+  yqlparseTAO:yqlparseTAO
 
 
 };

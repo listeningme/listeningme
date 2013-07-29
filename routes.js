@@ -74,4 +74,6 @@ module.exports = function (app) {
   //新增子類別清單
   app.post('/bk/addSecondCategoryTag', controllers.bk.addSecondCategoryTag);
 
+  app.post('/bk/yqlparseTAO',controllers.bk.yqlparseTAO);
+
 }

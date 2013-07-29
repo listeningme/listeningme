@@ -24,5 +24,6 @@ exports.Alltag = mongoose.model('Alltag');
 exports.Noresaultfeedback = mongoose.model('Noresaultfeedback');
 exports.Sendlawerrfeedback = mongoose.model('Sendlawerrfeedback');
 exports.Secondcategorytag = mongoose.model('Secondcategorytag');
+exports.Taoyqlparse = mongoose.model('Taoyqlparse');
 
 
