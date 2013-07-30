@@ -2,7 +2,9 @@
 <html ng-app="turquoise_bk_app">
   <% include head %>
   <body>
-    <% include header %>  
+    <div id="top" ng-controller="headerCtrl">
+      <ng-include src="'/themeplate/header.ejs'"></ng-include>
+    </div>
     <a href="/bk/#/maxvalue_manage">最大價值管理</a>
     <a href="/bk/#/lacation_manage">地區管理</a>
     <a href="/bk/#/law_manage">法條管理</a>
@@ -16,6 +18,9 @@
     <!-- Also a way to navigate -->
     <script type="text/javascript">
       var myapp = angular.module('turquoise_bk_app', ['ui.state']) ;
+      myapp.controller('headerCtrl',function($scope){
+        $scope._isLogin = <%= _isLogin %>;
+      });
       myapp.config(function($stateProvider, $urlRouterProvider,$routeProvider){
       // For any unmatched url, send to /route1
       $urlRouterProvider.otherwise("/");

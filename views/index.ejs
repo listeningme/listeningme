@@ -2,7 +2,9 @@
 <html ng-app="turquoiseapp">
   <% include head %>
   <body>
-    <% include header %>  
+    <div id="top" ng-controller="headerCtrl">
+      <ng-include src="'/themeplate/header.ejs'"></ng-include>
+    </div>
     <div ui-view></div> 
     <div id="moverightFr" ng-class="aaa? 'animated bounceInRight modelsdiv' : 'moverightFr'" ng-controller="likelistCtrl">
       <div class="mouserightFr" style="width:60px;height:100px;background:#333;">
@@ -44,6 +46,9 @@
       myapp.factory('search_zh',function(){
         return _str_type;
       })
+      myapp.controller('headerCtrl',function($scope){
+        $scope._isLogin = <%= _isLogin %>;
+      });
       // 喜歡列表清單-------------------------------------------------  
       myapp.controller('likelistCtrl',function($scope,$localStorage,search_zh){
           $scope.$storage = $localStorage.$default({
@@ -125,7 +130,7 @@
                 $scope.searchblank = true;
               }
               $scope.selected = undefined;
-              $http.get('/bk/getAllFirstTag').success(function (data) {
+              $http.get('/get/allFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
                   angular.forEach(data, function(v, k){
@@ -327,7 +332,7 @@
                 //console.log($scope.$storage.likelawlist);
               }
               
-              $http.get('/bk/getAllFirstTag').success(function (data) {
+              $http.get('/get/allFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
                   angular.forEach(data, function(v, k){
@@ -425,7 +430,7 @@
                   $scope._tmp_fw= _tmp_fw;
                   $scope._tmp_cc= _tmp_cc;
                 });
-              $http.get('/bk/getAllFirstTag').success(function (data) {
+              $http.get('/get/allFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
                   angular.forEach(data, function(v, k){
@@ -545,7 +550,7 @@
         })
         .state('login',{
            url: "/login",
-            templateUrl: "/themeplate/login/login.ejs",
+            templateUrl: "/themeplate/login.ejs",
             controller:function ($scope,$stateParams){
             }
         })

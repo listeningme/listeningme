@@ -1,4 +1,5 @@
 {
   "App_name": "listening_Me",
-  "db": "輸入mongodb位置"
+  "db": "輸入mongodb位置",
+  "sessionsecret":"session secret"
 }

@@ -17,15 +17,21 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  
-  // app.use(express.cookieParser());//開啟cookie
-  // app.use(express.session({//開啟session
-  //   secret: config.session_secret
-  // }));
+
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-
-
+  app.use(express.cookieParser());//開啟cookie
+  if(!process.env.PORT){
+    var sessionsecret = require('./config').sessionsecret;
+    app.use(express.session({//開啟session
+        secret: sessionsecret
+    }));
+  }else{
+    app.use(express.session({//開啟session
+        secret: process.env.sessionsecret
+    }));
+  }
+  app.use(require(path.join(__dirname, 'controllers', 'index.js')).bk.auth_user);
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'assets')));
 });

@@ -3,6 +3,7 @@
 var path = require('path');
 var controllers = require(path.join(__dirname, 'controllers', 'index.js'));
 var models = require(path.join(__dirname, 'models', 'index.js'));
+
 //var config = require(path.join(__dirname, '/', 'config.json'));
 
 module.exports = function (app) {  
@@ -19,13 +20,19 @@ module.exports = function (app) {
   app.get('/get/location', controllers.home.location);
   //得到此地區機關
   app.get('/get/UnitsOnSameLocation', controllers.home.UnitsOnSameLocation);
+  //得到所有第一階層tags
+  app.get('/get/allFirstTag', controllers.home.allFirstTag);
   //傳送查詢結果為沒有的意見回饋
   app.post('/noResaultFeedBack', controllers.home.noResaultFeedBack);
   //傳送單一法條勘誤回饋
   app.post('/sendLawErrFeedback', controllers.home.sendLawErrFeedback);
 
 
-  
+
+  //-------登入驗證
+  app.get('/bk/login',controllers.bk.login);
+  app.post('/bk/userlogin',controllers.bk.userlogin);
+  app.get('/bk/logout',controllers.bk.logout);  
   //-------後端
   app.get('/bk', controllers.bk.index);
   //查詢全階層tag
