@@ -10,14 +10,22 @@ var app = express();
 
 app.enable("jsonp callback");
 
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3111);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
+  
+  // app.use(express.cookieParser());//開啟cookie
+  // app.use(express.session({//開啟session
+  //   secret: config.session_secret
+  // }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+
+
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'assets')));
 });
