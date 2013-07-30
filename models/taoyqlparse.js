@@ -9,8 +9,8 @@ var taoyqlparseSchema = new Schema({
   content:      String,
   location:     String,
   url:          String,
-  unit:         [String]
-
+  unit:         [String],
+  _tmptag:      [String]
 });
 
 

@@ -2724,6 +2724,109 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 .errdivsent{
   margin-left:-400px;left:50%;margin-top:-200px;top:50%;height:600px;width:800px;z-index:999;position:fixed;
 }
+.highlight-enter {
+        -webkit-transition: 1s;
+        transition: 1s;
+        background: #fff;
+      }
+    
+      .highlight-enter.highlight-enter-active {
+        background: #f08;
+      }
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,900,100,300);
+.accountnum{
+    text-align:center;
+    font:35px 'Roboto';
+    font-weight:900;
+    color:#ECD078;
+    text-transform:uppercase;
+    line-height:20px;
+    text-shadow:
+        1px 1px 0 #24374c,
+        2px 2px 0 #24374c,  
+        3px 3px 0 #24374c,
+        5px 4px 0 #24374c,
+        6px 6px 0 #24374c,
+        7px 7px 0 #24374c,
+        8px 8px 0 #24374c,
+        9px 9px 0 #24374c,
+        10px 10px 0 #24374c;
+}
+.accountnum:hover {
+  -webkit-animation: header .5s 16 ease-in-out;
+  -moz-animation: header .5s 16 ease-in-out;
+  -o-animation: header .5s 16 ease-in-out;
+  -webkit-animation-iteration-count:1;
+  -moz-animation-iteration-count:1;
+  -o-animation-iteration-count:1;
+  
+}
+
+  @-webkit-keyframes header {
+  0%   {letter-spacing:2px; color:rgba(236,208,120,1);} 
+  10%  {letter-spacing:4px; color:rgba(236,208,120,.9);}
+  20%  {letter-spacing:6px; color:rgba(236,208,120,.8);} 
+  30%  {letter-spacing:8px; color:rgba(236,208,120,.7);} 
+  40%  {letter-spacing:10px; color:rgba(236,208,120,.6);}  
+  50%  {letter-spacing:12px; color:rgba(236,208,120,.5);}  
+  60%  {letter-spacing:10px; color:rgba(236,208,120,.6);}
+  70%  {letter-spacing:8px; color:rgba(236,208,120,.7);}
+  80%  {letter-spacing:6px; color:rgba(236,208,120,.8);}
+  90%  {letter-spacing:4px; color:rgba(236,208,120,.9);}
+  100% {letter-spacing:2px; color:rgba(236,208,120,1);}
+}
+
+@import url(http://fonts.googleapis.com/css?family=Oswald:700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700);
+
+html {
+   height: 100%;
+} 
+.container_ad_fr
+{
+  position: fixed;
+  z-index: 9999;
+  background-color: #Fsd576;
+  height: 100%;
+  width: 100%; 
+  display: table;
+}
+.container_ad {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center; 
+  background: #fabc8f;
+  background: -moz-radial-gradient(center, ellipse cover,  #fabc8f 0%, #ef705b 81%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fabc8f), color-stop(81%,#ef705b));
+  background: -webkit-radial-gradient(center, ellipse cover,  #fabc8f 0%,#ef705b 81%);
+  background: -o-radial-gradient(center, ellipse cover,  #fabc8f 0%,#ef705b 81%);
+  background: -ms-radial-gradient(center, ellipse cover,  #fabc8f 0%,#ef705b 81%);
+  background: radial-gradient(ellipse at center,  #fabc8f 0%,#ef705b 81%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fabc8f', endColorstr='#ef705b',GradientType=1 );
+}
+
+
+.title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 5em;
+  text-transform: uppercase;
+  color: #5A656B;
+  margin-bottom: 30px;
+  text-shadow:2px 1px 0px #FFF, 3px 2px 2px #999;
+}
+.sub-title {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 1.0em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #454F54;
+  padding-bottom: 8px;
+}
+.hr {
+  background: transparent;
+  border-bottom: 1px dotted #e8ab6a;
+}
+
 .marker-wrapper{position:relative;width:70px;height:70px;margin:0 auto;}
 .marker-wrapper:after{content:'';position:absolute;left:30%;right:30%;height:5%;bottom:-27%;z-index:-1;-webkit-box-shadow:0 5px 20px rgba(0,0,0,0.5);box-shadow:0 5px 20px rgba(0,0,0,0.5);-webkit-border-radius:50%;border-radius:50%;background:rgba(0,0,0,0.1)}
 .marker{display:block;position:absolute;width:100%;height:100%;background:#ef705b;-webkit-border-radius:50% 50% 0 50%;border-radius:50% 50% 0 50%;border:1px #ef605b solid;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);}

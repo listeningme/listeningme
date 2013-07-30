@@ -80,7 +80,6 @@ module.exports = function (app) {
   app.get('/bk/getSecondCategoryTag', controllers.bk.getSecondCategoryTag);
   //新增子類別清單
   app.post('/bk/addSecondCategoryTag', controllers.bk.addSecondCategoryTag);
-
   app.post('/bk/yqlparseTAO',controllers.bk.yqlparseTAO);
-
+  app.post('/bk/batchchangelocation',controllers.bk.batchChangeLocation);
 }

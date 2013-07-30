@@ -13,7 +13,8 @@
     "request": "*",
     "crypto": "*",
     "readable-stream": "*",
-    "yql": "*"
+    "yql": "*",
+    "jquery": "*"
   },
   "repository": {
     "type": "git",

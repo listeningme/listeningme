@@ -4,6 +4,7 @@ var models = require('../models/index.js');
 var utils = require('../lib/util');
 var request = require('request');
 var YQL = require('yql');
+var $ = require('jquery');
 if(!process.env.PORT){
     var sessionsecret = require('./../config').sessionsecret;
     var auth_cookie_name =  require('./../config').auth_cookie_name;
@@ -355,7 +356,18 @@ function updateThisTagManage(req,res,next){
 }
 
 
-
+function batchChangeLocation(req,res,next){
+	for(var ty in req.body._tmpid){
+		models.Lawdetails.update({ '_id': req.body._tmpid[ty] },
+		 {$set:{
+		 	location: req.body.value,
+		 }}, function (err, numberAffected, raw) {
+		  //console.log(err);
+		  if (err) return handleError(err);
+		  console.log('done!');
+		});
+	}
+}
 
 
 
@@ -363,6 +375,41 @@ function updateThisTagManage(req,res,next){
 
 
 function yqlparseTAO(req,res,next){
+	// console.log('dd');
+	// var tag_eng = [ {en_tag:'liab',ch_tag:'translation missing: zh-TW.category.liab'},  {en_tag:'edu_TPE_DOEDU',ch_tag:'translation missing: zh-TW.category.edu_TPE_DOEDU'},  {en_tag:'EDU',ch_tag:'translation missing: zh-TW.category.EDU'},  {en_tag:'TPE_DOEDU',ch_tag:'translation missing: zh-TW.category.TPE_DOEDU'},  {en_tag:'TPE_DOSW',ch_tag:'translation missing: zh-TW.category.TPE_DOSW'},  {en_tag:'NTU',ch_tag:'translation missing: zh-TW.category.NTU'},  {en_tag:'law',ch_tag:'法律訴訟'},  {en_tag:'repair',ch_tag:'修屋'},  {en_tag:'disaster',ch_tag:'災害救助'},  {en_tag:'greet',ch_tag:'關懷服務'},  {en_tag:'homecare',ch_tag:'居家照護'},  {en_tag:'examination',ch_tag:'健檢'},  {en_tag:'pregnant',ch_tag:'懷孕生產'},  {en_tag:'care',ch_tag:'育兒托育'},  {en_tag:'protect',ch_tag:'安置保護'},  {en_tag:'consoult',ch_tag:'個案諮詢'},  {en_tag:'socialinsurance',ch_tag:'社會保險補助'},  {en_tag:'tax',ch_tag:'稅捐減免'},  {en_tag:'allowance',ch_tag:'生活津貼'},  {en_tag:'emergency',ch_tag:'急難救助'},  {en_tag:'medical',ch_tag:'醫療照護'},  {en_tag:'living',ch_tag:'購屋租屋'},  {en_tag:'assistivedevice',ch_tag:'輔具'},  {en_tag:'work',ch_tag:'工作'},  {en_tag:'transportation',ch_tag:'交通'},  {en_tag:'pregnant',ch_tag:'懷孕'},  {en_tag:'pregnant',ch_tag:'懷兒子'},  {en_tag:'pregnant',ch_tag:'懷女兒'},  {en_tag:'living',ch_tag:'住屋'},  {en_tag:'living',ch_tag:'買房子'},  {en_tag:'living',ch_tag:'買厝'},  {en_tag:'living',ch_tag:'租房子'},  {en_tag:'living',ch_tag:'租厝'},  {en_tag:'assistivedevice',ch_tag:'助聽器'},  {en_tag:'assistivedevice',ch_tag:'輔助行走器'},  {en_tag:'law',ch_tag:'打官司'},  {en_tag:'NTU',ch_tag:'台大'},  {en_tag:'NTU',ch_tag:'台灣大學'},  {en_tag:'repair',ch_tag:'修房子'},  {en_tag:'repair',ch_tag:'壁癌'},  {en_tag:'disaster',ch_tag:'地震'},  {en_tag:'disaster',ch_tag:'水災'},  {en_tag:'disaster',ch_tag:'火災'},  {en_tag:'disaster',ch_tag:'天災'},  {en_tag:'homecare',ch_tag:'老人照顧'},  {en_tag:'homecare',ch_tag:'外籍看護'},  {en_tag:'homecare',ch_tag:'菲傭'},  {en_tag:'homecare',ch_tag:'印傭'},  {en_tag:'examination',ch_tag:'健康檢查'},  {en_tag:'examination',ch_tag:'身體檢查'},  {en_tag:'examination',ch_tag:'體檢'},  {en_tag:'transportation',ch_tag:'捷運'},  {en_tag:'transportation',ch_tag:'公車'},  {en_tag:'allowance',ch_tag:'老農津貼'}, ] ;	
+	// var kqq ={};
+	// 	kqq.location = ['KHH'];
+	// 	kqq.category=[];
+	// 	for (var r in tag_eng){
+	// 		kqq.category.push(tag_eng[r].en_tag)
+	// 	}
+	// 	var kqqd = JSON.stringify(kqq);
+	// $.ajax({	
+	// 	type:'POST',
+	// 	data:{q:kqqd},
+	// 	url:'http://listening-api.g0v.tw/api/search.json',
+	// 	success:function(rd){
+	// 		//console.log(rd);
+
+	// 		for(var o in rd){
+	// 			console.log(rd[o].rule)
+	// 			// var _arrt = [];
+	// 			// for(var t in rd[o].rule.tags){
+	// 			// 	_arrt.push(rd[o].rule.tags[t].tag.value)
+	// 			// }
+	// 			// // (new models.Taoyqlparse({
+	// 			// // 	title : rd[o].rule.title,
+	// 			// // 	content : rd[o].rule.content,
+	// 			// // 	url:rd[o].rule.url,
+	// 			// // 	_tmptag: _arrt
+	// 			// // })).save(utils.checkError(next, function () {
+	// 			// // 	res.end('success');
+	// 			// // }));
+	// 			// console.log('done!');
+	// 		}
+	// 	},
+	// 	dataType:'jsonp'
+	// })
 	// var query = models.Taoyqlparse.find({});
 	// 	 query.exec(function(error, results){
 	//        if(results != ''){
@@ -372,8 +419,8 @@ function yqlparseTAO(req,res,next){
 	// 					title:results[tt].title,
 	// 					content:results[tt].content,
 	// 					location:results[tt].location,
-	// 					unit:results[tt].unit,
 	// 					url:results[tt].url,
+	// 					firsttag:results[tt]._tmptag,
 	// 				})).save(utils.checkError(next, function () {
 	// 					res.end('success');
 	// 					console.log('done!');
@@ -466,7 +513,8 @@ module.exports = {
   addNewUnit:addNewUnit,
   getSecondCategoryTag:getSecondCategoryTag,
   addSecondCategoryTag:addSecondCategoryTag,
-  yqlparseTAO:yqlparseTAO
+  yqlparseTAO:yqlparseTAO,
+  batchChangeLocation:batchChangeLocation
 
 
 };

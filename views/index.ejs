@@ -2,6 +2,13 @@
 <html ng-app="turquoiseapp">
   <% include head %>
   <body>
+    <div ng-controller="openCtrl" class="container_ad_fr" ng-class="showthat? 'animated bounceOutUp':''">
+        <section class="container_ad">
+        <div class="title animated fadeIn">福利請聽</div>
+        <div class="sub-title">一個成功的社會並不是看富裕的人過得多優渥，而是弱勢的如何自在的生存。</div>
+        <div class="hr"></div>
+        </section>
+    </div>
     <div id="top" ng-controller="headerCtrl">
       <ng-include src="'/themeplate/header.ejs'"></ng-include>
     </div>
@@ -32,10 +39,7 @@
               <li ng-repeat="i in likelistshow"><a href="/#/details/{{i._id}}" style="cursor:pointer">{{i.title}}</a></li>
             </ul>  
           </li>
-
         </ul>
-        
-
       </div>
     </div>
     <!-- Also a way to navigate -->
@@ -49,6 +53,13 @@
       myapp.controller('headerCtrl',function($scope){
         $scope._isLogin = <%= _isLogin %>;
       });
+      myapp.controller('openCtrl',function($scope,$timeout){
+          $scope.showthat = false;
+              $timeout(function() {
+                  $scope.showthat = true;
+                  console.log($scope.showthat);
+              }, 1000);
+      })
       // 喜歡列表清單-------------------------------------------------  
       myapp.controller('likelistCtrl',function($scope,$localStorage,search_zh){
           $scope.$storage = $localStorage.$default({
@@ -73,7 +84,7 @@
             // url: "/route1/{contactId:[0-9]{1,8}}",
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
-            controller:function ($scope,$stateParams,$http,$location,$localStorage){
+            controller:function ($scope,$stateParams,$http,$location,$localStorage,$timeout){
               $scope.$storage = $localStorage;
               $scope.likethislaw =function (id,title){
                 var _arrtmp = {title:title,_id:id};

@@ -542,6 +542,24 @@
                       });
                   })
               }
+              $scope._tmpid= [];
+              $scope.batch = function (id){
+                
+                $scope._tmpid.push(id)
+                console.log($scope._tmpid);
+              }
+              $scope.sendbatch = function (type,value){
+                $http({
+                    url:'/bk/batchchangelocation',
+                    method: "POST",
+                    data:{
+                        _tmpid:$scope._tmpid,
+                        value:$scope.location_value
+                    }
+                  }).success(function (data, status, headers, config) {
+                      console.log(data);
+                  })
+              }
             }
         })
         .state('parse', {

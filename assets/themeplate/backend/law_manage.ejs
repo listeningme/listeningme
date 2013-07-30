@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="i in law_manages">
+                    <tr ng-repeat="i in law_manages" ng-click="batch(i._id)">
                         <td>{{i.location}}</td>
                         <td>{{i.title}}</td>
                         <td>{{i.unit}}</td>
@@ -24,6 +24,8 @@
                         <td><a class="btn" href="/bk/#/editlaw/{{i._id}}">編輯</a><a class="btn" ng-click="delete(i._id)">刪除</a></td>
                     </tr>
                 </tbody>
+                <input type="text" ng-model="location_value"/>
+                <a class="btn" ng-click="sendbatch('location','KHH')"></a>
             </table>
         </div>
     </div>
