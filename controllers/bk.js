@@ -354,8 +354,6 @@ function addThisTagManage(req,res,next){
 function updateThisTagManage(req,res,next){
 
 }
-
-
 function batchChangeLocation(req,res,next){
 	for(var ty in req.body._tmpid){
 		models.Lawdetails.update({ '_id': req.body._tmpid[ty] },
@@ -368,11 +366,6 @@ function batchChangeLocation(req,res,next){
 		});
 	}
 }
-
-
-
-
-
 
 function yqlparseTAO(req,res,next){
 	// console.log('dd');

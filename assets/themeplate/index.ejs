@@ -18,12 +18,12 @@
       <div class="well invoice" ng-class="searchblank? 'animated fadeInUp' : ''">
           <ul class="repo_div_fr clear_sfr" ng-repeat="i in datas">
             <div class="invoice-head" style="padding:0px 10px;">
-              <a class="btn" ng-click="likethislaw(i._id,i.title)">l</a>
-              <a href="/#/details/{{i._id}}" style="float:left;padding-left:20px;">
-                <h3 style="line-height:20px">{{i.title}}</h3>
+              <b class="btn btn-small btn-love" ng-click="likethislaw(i._id,i.title)"><i class="ico-heart" style=""></i></b>
+              <a href="/#/details/{{i._id}}" class="lawtitlefra">
+                <h3 class="lawtitleh3">&nbsp{{i.title}}</h3>
               </a>
               <ul class="pull-right minus-list invoice-data" style="float:left;padding-top:10px;padding-left:20px;">
-                <li style="width:450px;height:20px;overflow:hidden">內容預覽：{{i.content}}</li>
+                <li style="width:350px;height:20px;overflow:hidden">內容預覽：{{i.content}}</li>
               </ul>
               <h5 style="font-size:14px;float:right">Max Value：{{i.max_type}}{{i.max_content}}</h5>
             </div>

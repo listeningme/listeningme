@@ -2833,6 +2833,27 @@ html {
 .marker:before{content:'';position:absolute;left:10%;top:10%;width:80%;height:80%;background:#fff;-webkit-border-radius:50%;border-radius:50%;-webkit-box-shadow:inset 2px 0 10px rgba(0,0,0,0.5);box-shadow:inset 2px 0 10px rgba(0,0,0,0.5)}
 .marker:after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:30%;-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}
 
+.btn-love{
+  border-radius: 30px;
+  background: #fff;
+  float: left;
+  margin-top:8px;
+}
+.btn-love> i{
+  line-height: 10px;
+  margin: 0;
+  opacity: .3;
+  line-height:10px
+}
+.btn-love> i:hover{
+  opacity: .8
+}
+.lawtitleh3{
+  line-height:20px;width:350px;height:20px;overflow:hidden
+}
+.lawtitlefra{
+  float:left;padding-left:10px;
+}
 
 /* # Media queries
 ================================================== */
