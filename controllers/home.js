@@ -137,9 +137,18 @@ function allFirstTag(req,res,next){
         }
     });
 }
+function identifyDetails(req,res,next){
+  var query = models.Secondtag.find({});
+   query.exec(function(error, results){
+        if(results != ''){
+          res.send(results)
+        }
+    });
+}
 module.exports = {
   index: indexAction,
   allFirstTag:allFirstTag,
+  identifyDetails:identifyDetails,
   indexlaws:indexlaws,
   search:search,
   lawDetails:lawDetails,

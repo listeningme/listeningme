@@ -18,6 +18,8 @@ module.exports = function (app) {
   app.get('/get/lawListsOnSameLocation', controllers.home.lawListsOnSameLocation);
   //得到地區清單
   app.get('/get/location', controllers.home.location);
+  //得到identify 
+  app.get('/get/identifyDetails', controllers.home.identifyDetails);
   //得到此地區機關
   app.get('/get/UnitsOnSameLocation', controllers.home.UnitsOnSameLocation);
   //得到所有第一階層tags

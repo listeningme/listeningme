@@ -80,7 +80,7 @@
       //console.log($routeProvider);
       $stateProvider
         .state('index', {
-            url: "/index",
+            url: "/index?location",
             // url: "/route1/{contactId:[0-9]{1,8}}",
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
@@ -91,7 +91,20 @@
                 $scope.$storage.likelawlist.push(_arrtmp);
                 //console.log($scope.$storage.likelawlist);
               }
-              $http.get('/indexlaws?location=TPE').success(function (data) {
+              if($stateParams.location == null){
+                $stateParams.location = 'TPE';
+                $scope.location = 'TPE';
+              }else{
+                $scope.location = $stateParams.location;
+                //$scope.searchblank = true;
+              }
+              $http.get('/get/location').success(function (data) {
+                  $scope.lodatas = data;
+              });
+              $http.get('/get/identifyDetails').success(function (data) {
+                  $scope.identifydatas = data;
+              });
+              $http.get('/indexlaws?location='+$stateParams.location).success(function (data) {
                   $scope.datas = data;
                   var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
                   angular.forEach(data, function(v, k){
@@ -134,9 +147,7 @@
                   $scope._tmp_fw= _tmp_fw;
                   $scope._tmp_cc= _tmp_cc;
               });
-              $http.get('/get/location').success(function (data) {
-                  $scope.lodatas = data;
-              });
+              
               $scope.clicksearch = function (){
                 $scope.searchblank = true;
               }
@@ -152,8 +163,9 @@
               $scope.goSearchArrTag = []; //（搜尋用）專門放第一階段tag Arr
               $scope.goSearchArrGeneral = []; //（搜尋用）專門放使用者自己的關鍵字 Arr
               $scope.goSearchArrLocation = []; //（搜尋用）專門放使用者欲查詢地區 Arr
+              $scope.goSearchArrIdentify = []; //（搜尋用）專門放使用者查詢的身分 Arr
               //（待做）偵測使用者目前所在地區-------------------------------------
-              $scope.location = 'TPE';
+              
               $scope.goSearchArrLocation.push($scope.location);
               //--------------------------------------------------------------
               $scope.gosearch =function(){
@@ -171,67 +183,82 @@
                          }
                      });
                   });  
+                  angular.forEach($scope.identifydatas, function(value, key){
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(value.name_zh == v1){
+                            $scope.goSearchArrIdentify.push(value.name_en);
+                            _tmpArr.push(value.name_zh);
+                         }
+                     });
+                  })
+                  
                   angular.forEach(_tmpArr, function(v1, k1){
                        removeA(_sresault, v1);
                   });
                   //抓到要general的搜尋
                   var _gen = _sresault.toString();
                   var _tag = $scope.goSearchArrTag.toString();
+                  var _identify = $scope.goSearchArrIdentify.toString();
                   if(_tag == ''){
                     _tag = null
                   }
                   if(_gen == ''){
                     _gen = null
                   }
-                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
+                  if(_identify == ''){
+                    _identify = null
+                  }
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag,identify:_identify});
               }
               $scope.changelocation = function(t){
                   $scope.goSearchArrLocation.length = 0;
                   $scope.goSearchArrLocation.push(t);
                   if($scope.selected == undefined){
-                    $http.get('indexlaws?location='+$scope.goSearchArrLocation[0]).success(function (data) {
-                         $scope.datas = data;
-                         var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
-                          angular.forEach(data, function(v, k){
-                            if (v.max_type == 'NT.'){
-                              if(v.max_content!= undefined){
-                                _tmp_nt =_tmp_nt+Number(v.max_content);
-                              } 
-                            }
-                            if (v.max_type == '輔具'){
-                              if(v.max_content!= undefined){
-                                _tmp_ft.push(v.max_content); 
-                              }
-                            }
-                            if (v.max_type == '辦法'){
-                              if(v.max_content!= undefined){
-                                _tmp_bf.push(v.max_content);  
-                              }
-                              //console.log(_tmp_bf);
-                            }
-                            if (v.max_type == '名冊'){
-                              if(v.max_content!= undefined){
-                                  _tmp_mc.push(v.max_content);
-                              }
-                            }
-                            if (v.max_type == '服務'){
-                              if(v.max_content!= undefined){
-                                  _tmp_fw.push(v.max_content);
-                              }
-                            }
-                            if (v.max_type == '證件'){
-                              if(v.max_content!= undefined){
-                                  _tmp_cc.push(v.max_content);
-                              }
-                            }
-                          });
-                          $scope._tmp_nt= _tmp_nt;
-                          $scope._tmp_ft= _tmp_ft;
-                          $scope._tmp_bf= _tmp_bf;
-                          $scope._tmp_mc= _tmp_mc;
-                          $scope._tmp_fw= _tmp_fw;
-                          $scope._tmp_cc= _tmp_cc;
-                    });
+                    $location.path('/index').search({location:$scope.goSearchArrLocation[0]});
+                    
+                    // $http.get('indexlaws?location='+$scope.goSearchArrLocation[0]).success(function (data) {
+                    //      $scope.datas = data;
+                    //      var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
+                    //       angular.forEach(data, function(v, k){
+                    //         if (v.max_type == 'NT.'){
+                    //           if(v.max_content!= undefined){
+                    //             _tmp_nt =_tmp_nt+Number(v.max_content);
+                    //           } 
+                    //         }
+                    //         if (v.max_type == '輔具'){
+                    //           if(v.max_content!= undefined){
+                    //             _tmp_ft.push(v.max_content); 
+                    //           }
+                    //         }
+                    //         if (v.max_type == '辦法'){
+                    //           if(v.max_content!= undefined){
+                    //             _tmp_bf.push(v.max_content);  
+                    //           }
+                    //           //console.log(_tmp_bf);
+                    //         }
+                    //         if (v.max_type == '名冊'){
+                    //           if(v.max_content!= undefined){
+                    //               _tmp_mc.push(v.max_content);
+                    //           }
+                    //         }
+                    //         if (v.max_type == '服務'){
+                    //           if(v.max_content!= undefined){
+                    //               _tmp_fw.push(v.max_content);
+                    //           }
+                    //         }
+                    //         if (v.max_type == '證件'){
+                    //           if(v.max_content!= undefined){
+                    //               _tmp_cc.push(v.max_content);
+                    //           }
+                    //         }
+                    //       });
+                    //       $scope._tmp_nt= _tmp_nt;
+                    //       $scope._tmp_ft= _tmp_ft;
+                    //       $scope._tmp_bf= _tmp_bf;
+                    //       $scope._tmp_mc= _tmp_mc;
+                    //       $scope._tmp_fw= _tmp_fw;
+                    //       $scope._tmp_cc= _tmp_cc;
+                    // });
                   }
                   //console.log($scope.goSearchArrLocation);
               }
@@ -332,7 +359,7 @@
             }
         })
         .state('search',{
-           url: "/search/?general&tag&location",
+           url: "/search/?general&tag&location&identify",
             templateUrl: "/themeplate/index.ejs",
             factory:'search_zh',
             controller:function ($scope,$stateParams,$http,$location,$localStorage){
@@ -340,9 +367,10 @@
               $scope.likethislaw =function (id,title){
                 var _arrtmp = {title:title,_id:id};
                 $scope.$storage.likelawlist.push(_arrtmp);
-                //console.log($scope.$storage.likelawlist);
               }
-              
+              $http.get('/get/identifyDetails').success(function (data) {
+                  $scope.identifydatas = data;
+              });
               $http.get('/get/allFirstTag').success(function (data) {
                   $scope.allTagdatas = data;
                   var firsttagArr = [];
@@ -358,6 +386,19 @@
                  // console.log(data);
                   if($stateParams.tag != 'null'){
                       var _init_tag_tmp = $stateParams.tag.split(',');
+                  }
+                  if($stateParams.identify != 'null'){
+                      var _init_identify_tmp = $stateParams.identify.split(',');
+                  }
+                  var _init_identify = [];
+                  if($stateParams.identify != 'null'){
+                    angular.forEach(_init_identify_tmp, function(v, k){
+                      angular.forEach($scope.identifydatas, function(v1, k1){
+                           if(v1.name_en == v){
+                              _init_identify.push(v1.name_zh);
+                           }
+                      });
+                    });
                   }
                  // console.log(_init_tag_tmp);
                   var _init_tag = [];
@@ -382,7 +423,11 @@
                         _init_tmp.push(v);
                       });
                   }
-
+                  if($stateParams.identify != 'null'){
+                      angular.forEach(_init_identify, function(v, k){
+                        _init_tmp.push(v);
+                      });
+                  }
                   var _init_searchresault = '';
                   angular.forEach(_init_tmp, function(v, k){
                      _init_searchresault += v+' ';
@@ -395,7 +440,7 @@
               $http.get('/get/location').success(function (data) {
                   $scope.lodatas = data;
               });
-              $http.get('/search?general='+$stateParams.general+'&location='+$stateParams.location+'&tag='+$stateParams.tag).success(function (data) { 
+              $http.get('/search?general='+$stateParams.general+'&location='+$stateParams.location+'&tag='+$stateParams.tag+'&identify='+$stateParams.identify).success(function (data) { 
                   if(data=='none'){
                     $scope.noneresult = true;
                   }
@@ -452,6 +497,7 @@
               $scope.goSearchArrTag = []; //（搜尋用）專門放第一階段tag Arr
               $scope.goSearchArrGeneral = []; //（搜尋用）專門放使用者自己的關鍵字 Arr
               $scope.goSearchArrLocation = []; //（搜尋用）專門放使用者欲查詢地區 Arr
+              $scope.goSearchArrIdentify = []; //（搜尋用）專門放使用者查詢的身分 Arr
               //（待做）偵測使用者目前所在地區-------------------------------------
               $scope.location = $stateParams.location;
               $scope.goSearchArrLocation.push($scope.location);
@@ -467,8 +513,6 @@
                      $scope.goSearchArrTag.push(v);
                   });  
               }
-              // console.log($scope.goSearchArrGeneral);
-              // console.log($scope.goSearchArrTag);
               $scope.gosearch =function(){
                   search_zh = $scope.selected
                   var _sresault = $scope.selected.split(' ');
@@ -483,27 +527,39 @@
                          }
                      });
                   });  
+                  angular.forEach($scope.identifydatas, function(value, key){
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(value.name_zh == v1){
+                            $scope.goSearchArrIdentify.push(value.name_en);
+                            _tmpArr.push(value.name_zh);
+                         }
+                     });
+                  })
                   angular.forEach(_tmpArr, function(v1, k1){
                        removeA(_sresault, v1);
                   });
                   //抓到要general的搜尋
                   var _gen = _sresault.toString();
                   var _tag = $scope.goSearchArrTag.toString();
+                  var _identify = $scope.goSearchArrIdentify.toString();
                   if(_tag == ''){
                     _tag = null
                   }
                   if(_gen == ''){
                     _gen = null
                   }
-                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
+                  if(_identify == ''){
+                    _identify = null
+                  }
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag,identify:_identify});
               }
               $scope.changelocation = function(t){
                   $scope.goSearchArrLocation.length = 0;
                   $scope.goSearchArrLocation.push(t);
-
                   search_zh = $scope.selected
                   var _sresault = $scope.selected.split(' ');
                   var _tmpArr = [];
+                  
                   angular.forEach($scope.allTagdatas, function(v, k){
                       angular.forEach(_sresault, function(v1, k1){
                          if(v.name_zh == v1){
@@ -514,20 +570,31 @@
                          }
                      });
                   });  
+                  angular.forEach($scope.identifydatas, function(value, key){
+                      angular.forEach(_sresault, function(v1, k1){
+                         if(value.name_zh == v1){
+                            $scope.goSearchArrIdentify.push(value.name_en);
+                            _tmpArr.push(value.name_zh);
+                         }
+                     });
+                  })
                   angular.forEach(_tmpArr, function(v1, k1){
                        removeA(_sresault, v1);
                   });
                   //抓到要general的搜尋
                   var _gen = _sresault.toString();
                   var _tag = $scope.goSearchArrTag.toString();
+                   var _identify = $scope.goSearchArrIdentify.toString();
                   if(_tag == ''){
                     _tag = null
                   }
                   if(_gen == ''){
                     _gen = null
                   }
-                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag});
-
+                  if(_identify == ''){
+                    _identify = null
+                  }
+                  $location.path('/search/').search({general:_gen,location:$scope.goSearchArrLocation[0],tag:_tag,identify:_identify});
                   //console.log($scope.goSearchArrLocation);
               }
 

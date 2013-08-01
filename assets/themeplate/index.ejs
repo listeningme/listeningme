@@ -7,7 +7,6 @@
           <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
       </div>
       <div class="span12" style="height:120px;" ng-hide="searchblank"></div>
-
       <ng-include src="'/themeplate/account.ejs'"></ng-include>
       <h5 class="widget-name" >
       </h5>
@@ -25,7 +24,7 @@
               <ul class="pull-right minus-list invoice-data" style="float:left;padding-top:10px;padding-left:20px;">
                 <li style="width:350px;height:20px;overflow:hidden">內容預覽：{{i.content}}</li>
               </ul>
-              <h5 style="font-size:14px;float:right">Max Value：{{i.max_type}}{{i.max_content}}</h5>
+              <h5 style="font-size:14px;float:right" ng-hide="i.max_type == ''">Max Value：{{i.max_type}}{{i.max_content}}</h5>
             </div>
           </ul>
       </div>
@@ -41,6 +40,5 @@
             </li>
           </ul>
       </div>
-
   	</div>
 </div>
