@@ -1,7 +1,10 @@
 {
   "author": "iamblue",
   "contributors": [
-    "iamblue"
+    "iamblue",
+    "poying",
+    "yutin1987",
+    "wildjcrt"
   ],
   "status": "alpha",
   "name": "listeningme",
@@ -37,6 +40,7 @@
   "needs": [
     "designer",
     "programmer",
-    "writer"
+    "writer",
+    "Social Welfare Worker"
   ]
 }
