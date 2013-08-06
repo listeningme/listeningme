@@ -294,7 +294,7 @@
               $http.get('/get/lawDetails?_id='+$stateParams.id).success(function (data) {
                   $scope.lawdatas = data;
                 });
-
+              
               //$scope.afterPartialLoaded = function() {
                 //var currentPageId = $location.path();
                 //$scope.partialTitle = $scope.currentPage.shortName;
@@ -328,6 +328,7 @@
                     $scope.err_content = '';
                 }
               }
+
               $scope.senderrdata = function (){
                 $http({
                     url:'/sendLawErrFeedback',
@@ -347,8 +348,31 @@
                         $scope.email = '';
                       }
                 });
-                
               }
+              $scope.updatelawcontent = function(){
+                  $http({
+                    url:'/bk/updateEditLaw',
+                    method:'POST',
+                    data:{
+                      _id:$scope.lawdatas[0]._id,
+                      title:$scope.lawdatas[0].title,
+                      content:$scope.rawcontent,
+                      url:$scope.lawdatas[0].url,
+                      max_content:$scope.lawdatas[0].max_content,
+                      max_type:$scope.lawdatas[0].max_type,
+                      unit:$scope.lawdatas[0].unit,
+                      location:$scope.lawdatas[0].location,
+                      firsttag:$scope.lawdatas[0].firsttag,
+                      secondtag:$scope.lawdatas[0].secondtag,
+                    },
+                    }).success(function (data, status, headers, config) {
+                      if(data.res == true){
+                        alert('已儲存成功！')
+                      }else{
+                        alert('很抱歉您目前沒有權限更改，想參與編輯請與我們聯絡！');
+                      }
+                  });
+                }
             }
         })
         .state('aboutus',{
@@ -646,8 +670,12 @@
             replace: true,
             link: function (scope, element, attrs) {
                 $http.get('/get/lawDetails?_id='+scope.$stateParams.id).success(function (data) {
-                    element.html(converter.makeHtml(data[0].content));
+                    scope.rawcontent = data[0].content;
+                    element.html(converter.makeHtml(scope.rawcontent));
                 });
+                scope.updatecontent = function(){
+                  element.html(converter.makeHtml(scope.rawcontent));
+                }
             }
         };
     });

@@ -3,8 +3,8 @@
 var models = require('../models/index.js');
 var utils = require('../lib/util');
 var request = require('request');
-var YQL = require('yql');
-var $ = require('jquery');
+// var YQL = require('yql');
+// var $ = require('jquery');
 if(!process.env.PORT){
     var sessionsecret = require('./../config').sessionsecret;
     var auth_cookie_name =  require('./../config').auth_cookie_name;
@@ -206,7 +206,6 @@ function updateEditLaw(req, res, next){
 		if(!req.body.secondtag){
 			req.body.secondtag= ''
 		}
-
 		models.Lawdetails.update({ '_id': req.body._id },
 		 {$set:{
 		 	title : req.body.title,

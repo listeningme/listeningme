@@ -38,7 +38,6 @@
                     <div class="wrapper">
                         <h3>我們整理的資料對你有幫助嗎？請您贊助我們</h3>
                         <p>福利請聽團隊致力於福利法條系統的查詢。</p>
-
                         <h4>Email:tw.listening.service@gmail.com</h4>
                     </div>
                 </div>
@@ -54,8 +53,13 @@
             </div>
            <!--  // -->
           <br/><br/>
-            <h1 class="tt1_a">{{lawdatas[0].title}}</h1>
-            <div class="content_a "><markdown></markdown></div>
+            <h1 class="tt1_a" ng-dblclick="edittitle =!edittitle" ng-hide="edittitle">{{lawdatas[0].title}}</h1>
+            <input type="text" value="{{lawdatas[0].title}}" ng-show="edittitle" style="margin:20px 0;width:500px;" ng-model="lawdatas[0].title"/> <a class="btn btn-success" ng-show="edittitle" ng-click="edittitle =!edittitle;updatelawcontent()" >修改</a>
+            <div class="content_a">
+                <markdown ng-dblclick="editcontent=!editcontent" ng-hide="editcontent"></markdown>
+                <textarea ng-model="rawcontent" rows="30" cols="150" ng-show="editcontent" value="{{rawcontent}}"></textarea>
+                <a class="btn btn-success" ng-show="editcontent" ng-click="editcontent=!editcontent;updatecontent();updatelawcontent();">修改</a>
+            </div>
             <br/>
             <h5 class="widget-name">
             </h5>
