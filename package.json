@@ -13,8 +13,6 @@
     "request": "*",
     "crypto": "*",
     "readable-stream": "*",
-    // "yql": "*",
-    // "jquery": "*",
     "grunt": "*"
   },
   "devDependencies": {
