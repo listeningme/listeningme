@@ -2,3 +2,4 @@ config.json
 .DS_Store
 /app
 /node_modules
+.elasticbeanstalk/
