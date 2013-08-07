@@ -1,27 +1,28 @@
 <div ui-view></div>
 <div id="content">
 	<div class="wrapper_c">   
-
-      <div class="span12" style="height:80px" ng-hide="searchblank">
-          <div class="btnlargefr" style="width:320px;margin:0 auto;margin-top:20px;">
-          <a class="btn btn-largest">老人</a>
-          <a class="btn btn-largest">幼兒</a>
-          <a class="btn btn-largest">學生</a>
-          <a class="btn btn-largest">低收入戶</a>
-          </div>
+      <div class="span12" style="margin-top:100px;height:80px">
+          <div class="title" style="text-align:center">福利請聽</div>
+          <h4 style="text-align:center;color:#888;">幫助你找到你專屬的社會福利菜單</h4>
       </div>
       <div class="form-wrapper">
           <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-click="clicksearch()" >
           <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
       </div>
-      <div class="span12" style="height:120px;" ng-hide="searchblank"></div>
-
-      <ng-include src="'/themeplate/account.ejs'"></ng-include>
-      <h5 class="widget-name" >
-      </h5>
+      <div class="span12" style="height:120px;margin-top:-20px;" ng-hide="searchblank">
+        <div style="width:370px;margin:0 auto">
+            <div class="search_remind">老人</div>
+            <div class="search_remind">幼兒</div>
+            <div class="search_remind">低收入戶</div>
+            <div class="search_remind">身心障礙</div>
+            <div class="search_remind">榮民</div>
+        </div>
+      </div>
+      <!--  -->
+      <!-- <h5 class="widget-name" ></h5> -->
       <ng-include src="'/themeplate/search_header.ejs'"></ng-include>
-      <div class="well invoice" style="text-align:center;cursor:pointer" ng-show="!noneresult" ng-click="savethissearchtag()">
-      儲存此搜尋結果
+      <div class="well invoice" style="text-align:center">
+        <ng-include src="'/themeplate/account.ejs'"></ng-include>
       </div>
       <div class="well invoice" ng-class="searchblank? 'animated fadeInUp' : ''">
           <ul class="repo_div_fr clear_sfr" ng-repeat="i in datas">

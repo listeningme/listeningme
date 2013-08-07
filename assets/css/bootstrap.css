@@ -2739,6 +2739,9 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
   border-radius: 10px;
   height: 28px;
 }
+.search_remind{
+  padding-top:10px;height:30px;width:50px;padding-left:10px;padding-right:10px;text-align:center;border-top:1px solid #ddd;border-bottom:1px solid #ddd;cursor:pointer;float:left
+}
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,900,100,300);
 .accountnum{
     text-align:center;
