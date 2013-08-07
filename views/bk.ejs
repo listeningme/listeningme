@@ -5,6 +5,7 @@
     <div id="top" ng-controller="headerCtrl">
       <ng-include src="'/themeplate/header.ejs'"></ng-include>
     </div>
+    <div id="sidebar">
     <a href="/bk/#/maxvalue_manage">最大價值管理</a>
     <a href="/bk/#/lacation_manage">地區管理</a>
     <a href="/bk/#/law_manage">法條管理</a>
@@ -14,7 +15,10 @@
     <a href="/bk/#/alltag_manage">關鍵字所有階層管理</a>
     <a href="/bk/#/secondcategorytag_manage">子類別階層管理</a>
     <a href="/bk/#/parse">parse專區</a>
-    <div ui-view></div> 
+    </div>
+    <div id="content">
+    <div ui-view></div>
+    </div> 
     <!-- Also a way to navigate -->
     <script type="text/javascript">
       var myapp = angular.module('turquoise_bk_app', ['ui.state']) ;

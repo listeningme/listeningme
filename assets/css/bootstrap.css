@@ -541,7 +541,7 @@ span.green { background-color: #41CA83; }
 /* # Sidebar elements
 ================================================== */
 
-#sidebar { width: 250px; margin-right: 3px; float: right; display: block; 
+#sidebar { width: 120px; margin-right: 3px; float: right; display: block; 
 
 /*background-image: url(../img/backgrounds/body_line.png); background-repeat: repeat-y;*/}
 .sidebar-stats li, .user-links li a {
@@ -2733,6 +2733,12 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
       .highlight-enter.highlight-enter-active {
         background: #f08;
       }
+.btn-largest{
+  width: 50px;
+  padding-top: 22px;
+  border-radius: 10px;
+  height: 28px;
+}
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,900,100,300);
 .accountnum{
     text-align:center;
@@ -3175,7 +3181,8 @@ html {
   -webkit-box-shadow: 0 3px 3px rgba(255,255,255,.1), 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 5px #444;
   -moz-box-shadow: 0 3px 3px rgba(255,255,255,.1), 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 5px #444;
   box-shadow: 0 3px 3px rgba(255,255,255,.1), 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 5px #444;
-  margin: 45px auto;
+  margin: 10px auto;
+  margin-bottom: 45px;
   overflow: hidden;
   padding: 8px;
   width: 450px;

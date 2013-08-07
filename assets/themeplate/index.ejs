@@ -1,12 +1,21 @@
 <div ui-view></div>
 <div id="content">
 	<div class="wrapper_c">   
-      <div class="span12" style="height:120px" ng-hide="searchblank"></div>
+
+      <div class="span12" style="height:80px" ng-hide="searchblank">
+          <div class="btnlargefr" style="width:320px;margin:0 auto;margin-top:20px;">
+          <a class="btn btn-largest">老人</a>
+          <a class="btn btn-largest">幼兒</a>
+          <a class="btn btn-largest">學生</a>
+          <a class="btn btn-largest">低收入戶</a>
+          </div>
+      </div>
       <div class="form-wrapper">
           <input type="text" id="search" placeholder="請輸入福利搜尋條件..." ng-model="selected" typeahead="state for state in states | filter:$viewValue" required ng-click="clicksearch()" >
           <input type="submit" ng-click="gosearch()" value="go" id="submit" style="width:80px;margin-left:5px;">
       </div>
       <div class="span12" style="height:120px;" ng-hide="searchblank"></div>
+
       <ng-include src="'/themeplate/account.ejs'"></ng-include>
       <h5 class="widget-name" >
       </h5>
