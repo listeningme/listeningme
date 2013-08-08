@@ -31,6 +31,12 @@ module.exports = function (app) {
 
 
 
+
+  //-------一般user登入驗證
+  
+  
+
+
   //-------登入驗證
   app.get('/bk/login',controllers.bk.login);
   app.post('/bk/userlogin',controllers.bk.userlogin);

@@ -349,6 +349,14 @@
                       }
                 });
               }
+              $scope.openmoedict =function (la){
+                $('.content_a').moedict({spaced: true, lang: la});
+                $('.content_a').css('width','60%')
+              }
+              $scope.closemoedict = function (){
+                $('.content_a').css('width','100%');
+                $('#moedict').css('display','none')
+              }
               $scope.updatelawcontent = function(){
                   $http({
                     url:'/bk/updateEditLaw',
@@ -675,6 +683,7 @@
                 });
                 scope.updatecontent = function(){
                   element.html(converter.makeHtml(scope.rawcontent));
+                  // $('.content_a').moedict({spaced: true});
                 }
             }
         };
