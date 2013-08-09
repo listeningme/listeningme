@@ -39,6 +39,10 @@ iamblue <tonyone0902@gmail.com>
 * Facebook Group:https://www.facebook.com/groups/370247296422827/
 * Hackfoldr:http://hack.g0v.tw/g0vwelfare/BDRaUVBH8ZS 
 
+## 感謝名單
+
+特別感謝g0v提供各種技術.建議方向
+
 ## License
 
 The MIT license.
