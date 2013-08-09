@@ -113,10 +113,8 @@
                 $scope.$storage.likelawlist.push(_arrtmp);
                 //console.log($scope.$storage.likelawlist);
               }
-  
               $scope.lodatas = lodatas.data;
               $scope.identifydatas = identifydatas.data;
-              
               //從網址得到這個地區法條詳細
               $scope.datas = getlocationdatas.data;
               var _tmp_nt=0,_tmp_ft=[],_tmp_bf=[],_tmp_mc=[],_tmp_fw=[],_tmp_cc=[];
@@ -176,10 +174,10 @@
               $scope.goSearchArrIdentify = []; //（搜尋用）專門放使用者查詢的身分 Arr
               //（待做）偵測使用者目前所在地區-------------------------------------
               if($stateParams.location == null){
-                $scope.location = 'TPE';
+                 $scope.location = 'TPE';
               }else{
-                $scope.location = $stateParams.location;
-                //$scope.searchblank = true;
+                 $scope.location = $stateParams.location;
+                 //$scope.searchblank = true;
               };
               $scope.goSearchArrLocation.push($scope.location);
               //--------------------------------------------------------------
@@ -393,7 +391,7 @@
                 }
             },
             onExit: function(){
-              $('#moedict').css('display','none')
+              $('#moedict').css('display','none');
             }
         })
         .state('aboutus',{

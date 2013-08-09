@@ -1,10 +1,10 @@
-# listening 聽障福利小幫手
+# listening 福利請聽
 
 一個成功的社會並不是看富裕的人過得多優渥，而是弱勢的如何自在的生存。
 
 ##版本
 
-0.2.0
+0.2.3
 
 歡迎參加
 
@@ -12,8 +12,16 @@
 iamblue <tonyone0902@gmail.com>
 
 ##### 參與者
+
 * wildjcrt <wildjcrt@yahoo.com.tw>
 * Shawn Wang <shawn111@gmail.com>
+* Jedi 
+* Peggy Lo
+* Blakie 
+* Poying
+* yutin1987
+* Peter Huang
+...
 
 ## Install
 
@@ -28,13 +36,14 @@ iamblue <tonyone0902@gmail.com>
 ## Links
 
 * http://listening.g0v.tw
-* https://trello.com/board/listening/5104c0081e21a2cd25000978
+* Facebook Group:https://www.facebook.com/groups/370247296422827/
+* Hackfoldr:http://hack.g0v.tw/g0vwelfare/BDRaUVBH8ZS 
 
 ## License
 
 The MIT license.
 
-Copyright &copy; 2013 PO-JU CHEN, KUN-HANG LEE, JUNG-HSIANG (SHAWN) WANG
+Copyright &copy; 2013 PO-JU CHEN, KUN-HANG LEE, JUNG-HSIANG (SHAWN) WANG  ....
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
