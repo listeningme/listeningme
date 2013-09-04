@@ -3120,9 +3120,9 @@ html {
 
 @media (max-width: 479px) {
 
-  .logo { display: none; }
+  /*.logo { display: none; }*/
   #top > .fixed { text-align: center; }
-  .top-menu { float: none; display: inline-block; font-size: 0; margin-right: 0; }
+  .top-menu { float: none; display: none; font-size: 0; margin-right: 0; }
   .alt-buttons { margin-right: 0; }
   .page-stats { display: none; }
   .page-header { text-align: center; }
@@ -3138,6 +3138,7 @@ html {
   .fullview_btn{
     display: none
   }
+
 }
 
 

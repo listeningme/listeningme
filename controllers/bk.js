@@ -72,7 +72,7 @@ function userlogin(req,res,next){
 }
 //使用者登出
 function logout(req, res, next) {
-	console.log('kerker')
+	//console.log('kerker')
     req.session.destroy();
     res.clearCookie(auth_cookie_name, { path: '/' });
     res.redirect(req.headers.referer || '/');
