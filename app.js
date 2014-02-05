@@ -6,7 +6,6 @@ var express = require('express')
 
 
 var app = express();
-//var config = require(path.join(__dirname, '/', 'config.json'));
 
 app.enable("jsonp callback");
 
@@ -17,7 +16,6 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());//開啟cookie

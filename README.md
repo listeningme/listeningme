@@ -32,8 +32,8 @@ iamblue <tonyone0902@gmail.com>
 ## run
 	
 	1. 先去sample.config.json改成您的mongoDB路徑，存檔後把sample.config.json改成config.json
-    2. $ node app.js
-    3. see : localhost:3111
+  2. $ node app.js
+  3. see : localhost:3111
 
 ## Links
 
